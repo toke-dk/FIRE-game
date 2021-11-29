@@ -13,17 +13,17 @@ def new_game():
         guess = guess.upper()
         guesses.append(guess)
 
-        correct_guesses += check_answer(questions.get(key), guess)
+        correct_guesses += check_answer(questions.get(key), guess, options[0][question_num-1])
         question_num += 1
 
     display_score(correct_guesses, guesses)
 
 # -------------------------
-def check_answer(answer, guess):
+def check_answer(answer, guess, points):
 
     if answer == guess:
         print("CORRECT!")
-        return 1
+        return points[1]
     else:
         print("WRONG!")
         return 0
@@ -62,19 +62,13 @@ def play_again():
 
 questions = {
  "Who created Python?: ": "A",
- "What year was Python created?: ": "B",
- "Python is tributed to which comedy group?: ": "C",
- "Is the Earth round?: ": "A"
 }
 
-options = [["A. Guido van Rossum", "B. Elon Musk", "C. Bill Gates", "D. Mark Zuckerburg"],
-          ["A. 1989", "B. 1991", "C. 2000", "D. 2016"],
-          ["A. Lonely Island", "B. Smosh", "C. Monty Python", "D. SNL"],
-          ["A. True","B. False", "C. sometimes", "D. What's Earth?"]]
+options = [[["A. Guido van Rossum", 10], ["B. Elon Musk", 2], ["C. Bill Gates", -1], ["D. Mark Zuckerburg", 15]]]
 
 new_game()
 
 while play_again():
     new_game()
 
-print("Byeeeeee!")
+print("Godt spillet!")
