@@ -14,24 +14,27 @@ while running:
             running = False
         quiz_sets = [
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
-                                {"tekst": "C. Hus", "point": 100, "pris": 12}],
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100, "inkomststigning": 10},
+                                {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
+                                {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
-                                {"tekst": "C. Hus", "point": 100, "pris": 12}],
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100, "inkomststigning": 10},
+                                {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
+                                {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
-                                {"tekst": "C. Hus", "point": 100, "pris": 12}],
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100, "inkomststigning": 10},
+                                {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
+                                {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100},
-                                {"tekst": "B. Tog", "point": 5, "pris": 12},
-                                {"tekst": "C. Hus", "point": 100, "pris": 12}],
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100, "inkomststigning": 10},
+                                {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
+                                {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
         ]
@@ -62,6 +65,8 @@ while running:
                             penge -= i["pris"]
                             input(penge)
                             print(f"+ {inkomst} =")
+                            # evt asset
+                            inkomst += i["inkomststigning"]
                             # du får løn
                             penge += inkomst
                             run = False
