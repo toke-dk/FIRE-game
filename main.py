@@ -1,74 +1,24 @@
-def new_game():
+quiz_sets = [
+    {"spørgsmål": "Hvad vil du helst købe?",
+     "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
+                        {"tekst": "C. Hus", "point": 100, "pris": 12}],
+     "svar": "A"
+     },
+]
 
-    guesses = []
-    correct_guesses = 0
-    question_num = 1
-
-    for key in questions:
-        print("-------------------------")
-        print(key)
-        for i in options[question_num-1]:
-            print(i)
-        guess = input("Skriv (A, B, C, or D): ")
-        guess = guess.upper()
-        guesses.append(guess)
-
-        correct_guesses += check_answer(questions.get(key), guess, options[0][question_num-1])
-        question_num += 1
-
-    display_score(correct_guesses, guesses)
-
-# -------------------------
-def check_answer(answer, guess, points):
-
-    if answer == guess:
-        print("CORRECT!")
-        return points[1]
-    else:
-        print("WRONG!")
-        return 0
-
-# -------------------------
-def display_score(correct_guesses, guesses):
-    print("-------------------------")
-    print("RESULTAT")
-    print("-------------------------")
-
-    print("Svar: ", end="")
-    for i in questions:
-        print(questions.get(i), end=" ")
-    print()
-
-    print("Gæt: ", end="")
-    for i in guesses:
-        print(i, end=" ")
-    print()
-
-    score = int((correct_guesses/len(questions))*100)
-    print("Din score er: "+str(score)+"%")
-
-# -------------------------
-def play_again():
-
-    response = input("Vil du spille igen? (ja eller nej): ")
-    response = response.upper()
-
-    if response.upper() == "JA":
-        return True
-    else:
-        return False
-# -------------------------
-
-
-questions = {
- "Who created Python?: ": "A",
-}
-
-options = [[["A. Guido van Rossum", 10], ["B. Elon Musk", 2], ["C. Bill Gates", -1], ["D. Mark Zuckerburg", 15]]]
-
-new_game()
-
-while play_again():
-    new_game()
-
-print("Godt spillet!")
+for quiz_set in quiz_sets:
+    points = 0
+    penge = 500
+    quiz_set_items = list(quiz_set.items())
+    print(quiz_set["spørgsmål"])
+    for i in quiz_set["valgmuligheder"]:
+        print(i["tekst"])
+    run = True
+    while run:
+        gaet = input("Skriv(A,B,C): ")
+        for i in quiz_set["valgmuligheder"]:
+            # the first letter in the option
+            if gaet.upper() == i["tekst"][0]:
+                points += int(i["point"])
+                run = False
+    print(points)
