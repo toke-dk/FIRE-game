@@ -1,50 +1,68 @@
-quiz_sets = [
-    {"spørgsmål": "Hvad vil du helst købe?",
-     "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
-                        {"tekst": "C. Hus", "point": 100, "pris": 12}],
-     "svar": "A"
-     },
-    {"spørgsmål": "Hvad vil du helst købe?",
-     "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
-                        {"tekst": "C. Hus", "point": 100, "pris": 12}],
-     "svar": "A"
-     },
-    {"spørgsmål": "Hvad vil du helst købe?",
-     "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
-                        {"tekst": "C. Hus", "point": 100, "pris": 12}],
-     "svar": "A"
-     },
-    {"spørgsmål": "Hvad vil du helst købe?",
-     "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100},
-                        {"tekst": "B. Tog", "point": 5, "pris": 12},
-                        {"tekst": "C. Hus", "point": 100, "pris": 12}],
-     "svar": "A"
-     },
-]
-points = 0
-penge = 200
-inkomst = 100
+import pygame
+import pygame_stuff.progress_bar
 
-for quiz_set in quiz_sets:
-    quiz_set_items = list(quiz_set.items())
-    print(quiz_set["spørgsmål"])
-    for i in quiz_set["valgmuligheder"]:
-        print(i["tekst"])
-    run = True
-    while run:
-        gaet = input("Skriv(A,B,C): ")
-        # checks if it matchs the options
-        for i in quiz_set["valgmuligheder"]:
-            # the first letter in the option
-            if gaet.upper() == i["tekst"][0]:
-                # checks if you can afford
-                if penge - i["pris"] >= 0:
-                    penge -= i["pris"]
-                    points += int(i["point"])
-                    # du får løn
-                    penge += inkomst
-                    run = False
-                else:
-                    print("Du har ikke råd til det")
-    print(points)
-    print(penge)
+screen = pygame.display.set_mode((1000, 1000))
+
+pygame.display.set_caption("FIRE-spillet")
+
+pygame.display.flip()
+running = True
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        quiz_sets = [
+            {"spørgsmål": "Hvad vil du helst købe?",
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
+                                {"tekst": "C. Hus", "point": 100, "pris": 12}],
+             "svar": "A"
+             },
+            {"spørgsmål": "Hvad vil du helst købe?",
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
+                                {"tekst": "C. Hus", "point": 100, "pris": 12}],
+             "svar": "A"
+             },
+            {"spørgsmål": "Hvad vil du helst købe?",
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100}, {"tekst": "B. Tog", "point": 5, "pris": 12},
+                                {"tekst": "C. Hus", "point": 100, "pris": 12}],
+             "svar": "A"
+             },
+            {"spørgsmål": "Hvad vil du helst købe?",
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100},
+                                {"tekst": "B. Tog", "point": 5, "pris": 12},
+                                {"tekst": "C. Hus", "point": 100, "pris": 12}],
+             "svar": "A"
+             },
+        ]
+        points = 0
+        penge = 200
+        inkomst = 100
+
+        for quiz_set in quiz_sets:
+            quiz_set_items = list(quiz_set.items())
+            print(quiz_set["spørgsmål"])
+            for i in quiz_set["valgmuligheder"]:
+                print(i["tekst"])
+            run = True
+            while run:
+                # dette er fra den anden fil
+                pygame_stuff.progress_bar.update_bar(screen)
+
+                gaet = input("Skriv(A,B,C): ")
+                # checks if it matchs the options
+                for i in quiz_set["valgmuligheder"]:
+                    # the first letter in the option
+                    if gaet.upper() == i["tekst"][0]:
+                        # checks if you can afford
+                        if penge - i["pris"] >= 0:
+                            penge -= i["pris"]
+                            points += int(i["point"])
+                            # du får løn
+                            penge += inkomst
+                            run = False
+                        else:
+                            print("Du har ikke råd til det")
+            print(points)
+            print(penge)
+
