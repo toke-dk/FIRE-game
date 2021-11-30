@@ -13,3 +13,4 @@ def update_bar(screen):
 
 
     #Jeg kan lide bananer
+    # Jeg kan lide æbler
