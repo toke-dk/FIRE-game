@@ -56,13 +56,16 @@ while running:
                     if gaet.upper() == i["tekst"][0]:
                         # checks if you can afford
                         if penge - i["pris"] >= 0:
-                            penge -= i["pris"]
                             points += int(i["point"])
+                            print(f"{penge} - {i['pris']} = ")
+                            # prisen du skal betale
+                            penge -= i["pris"]
+                            input(penge)
+                            print(f"+ {inkomst} =")
                             # du får løn
                             penge += inkomst
                             run = False
                         else:
                             print("Du har ikke råd til det")
-            print(points)
-            print(penge)
+            input(f"Penge i alt: {penge}")
 
