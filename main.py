@@ -1,7 +1,7 @@
 import pygame
 import pygame_stuff.progress_bar
 
-screen = pygame.display.set_mode((1000, 1000))
+screen = pygame.display.set_mode((200, 200))
 
 pygame.display.set_caption("FIRE-spillet")
 
