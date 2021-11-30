@@ -41,7 +41,7 @@ while running:
 
         for quiz_set in quiz_sets:
             quiz_set_items = list(quiz_set.items())
-            print(quiz_set["spørgsmål"])
+            print(f'\nPenge: {penge}, Inkomst: {inkomst} \n{quiz_set["spørgsmål"]}')
             for i in quiz_set["valgmuligheder"]:
                 print(f'{i["tekst"]} : {i["pris"]}kr')
             run = True
