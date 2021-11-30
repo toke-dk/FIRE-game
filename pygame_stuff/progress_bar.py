@@ -10,3 +10,6 @@ def update_bar(screen):
     textsurface = myfont.render('Some Text', False, (200, 15, 10))
     screen.blit(textsurface, (0,0))
     pygame.display.flip()
+
+
+    #Jeg kan lide bananer
