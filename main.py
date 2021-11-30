@@ -43,7 +43,7 @@ while running:
             quiz_set_items = list(quiz_set.items())
             print(quiz_set["spørgsmål"])
             for i in quiz_set["valgmuligheder"]:
-                print(i["tekst"])
+                print(f'{i["tekst"]} : {i["pris"]}kr')
             run = True
             while run:
                 # dette er fra den anden fil
