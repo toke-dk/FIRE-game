@@ -43,7 +43,7 @@ def choose_crypto(penge, inkomst):
 
 
 
-screen = pygame.display.set_mode((200, 200))
+screen = pygame.display.set_mode((600, 800))
 
 pygame.display.set_caption("FIRE-spillet")
 
