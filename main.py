@@ -2,12 +2,15 @@ import pygame.display
 from pygame.locals import *
 import pygame_stuff.progress_bar
 import random
+import pygame_stuff.button_class
 from sys import exit
 
+pygame.init()
+unloadedbar = pygame.image.load("Billeder/loadedbar.png")
+loadedbar = pygame.image.load("Billeder/loadedbar.png")
 
 def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge):
     print(f"{gamle_penge} - {pris} = ")
-    input(nye_penge)
     print(f"+ {din_inkomst} =")
     print(f"Penge i alt {nye_penge}")
 
@@ -15,19 +18,17 @@ def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge
 def choose_crypto(penge, inkomst):
     gevinst = 0
     while True:
-        input("Du kan investere i 3 forskellige risicier")
         print("A) Bitcoin (stor risiko)")
         print("B) s&p 500 (lige risiko)")
         print("C) Disney (lille risiko)")
         while True:
-            type_invest = input("Hvilken: ")
             if type_invest.lower() == "a" or type_invest.lower() == "b" or type_invest.lower() == "c":
                 break
             else:
                 print("Det skal være et af valgmulighederne")
         while True:
             try:
-                beloeb = int(input("Hvor mange penge vil du investere: "))
+                beloeb = 2
                 if beloeb > penge:
                     print('Du har ikke råd')
                     continue
@@ -127,6 +128,13 @@ while running:
 
         for quiz_set in quiz_sets:
             quiz_set_items = list(quiz_set.items())
+            button1 = pygame_stuff.button_class.Button(screen,50,100,200,50,(0, 0, 255),(255, 255, 255),"hello",(0, 0, 0),font)
+            x, y = pygame.mouse.get_pos()
+            print(x, y)
+            button1.draw(x, y)
+            click_x,click_y = pygame.mouse.get_pos()
+            if button1.action(click_x, click_y):
+                print("Button Clicked")
 
             # text on pygame
             penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
@@ -162,9 +170,9 @@ while running:
             run = True
             while run:
                 # dette er fra den anden fil
-                pygame_stuff.progress_bar.update_bar(screen, points)
+                pygame_stuff.progress_bar.update_bar(screen, points, loadedbar, unloadedbar)
 
-                gaet = input("Skriv(A,B,C,I): ")
+                gaet = "a"
 
                 # investing
                 if gaet.upper() == "I":
@@ -182,7 +190,6 @@ while running:
                             print(f"{penge} - {i['pris']} = ")
                             # prisen du skal betale
                             penge -= i["pris"]
-                            input(penge)
                             print(f"+ {inkomst} =")
                             # evt asset
                             inkomst += i["inkomststigning"]
@@ -191,7 +198,6 @@ while running:
                             run = False
                         else:
                             print("Du har ikke råd til det")
-            input(f"Penge i alt: {penge}")
 
             # updates information
             screen.fill(color=(0,0,0))

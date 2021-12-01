@@ -1,15 +1,13 @@
 import pygame
 
-pygame.init()
 
 
-def update_bar(screen, point):
+def update_bar(screen, point, unloadedbar, loadedbar):
     # dette er bare en test for at se om det virker
     point_max = 100
     point_min = -100
 
-    unloadedbar = pygame.image.load("Billeder/loadedbar.png")
-    loadedbar = pygame.image.load("Billeder/loadedbar.png")
+
     unloadedbar_rect = unloadedbar.get_rect()
     loadedbar_rect = loadedbar.get_rect()
 
