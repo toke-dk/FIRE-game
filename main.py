@@ -55,14 +55,22 @@ while running:
                 pygame_stuff.progress_bar.update_bar(screen)
 
                 gaet = input("Skriv(A,B,C,I): ")
+                if gaet.upper() == "I":
+                    while True:
+                        try:
+                            beloeb = int(input("Hvor mange penge vil du investere: "))
+                            if beloeb > penge:
+                                # is doing except
+                                print("Du har ikke råd")
+                            else:
+                                break
+                        except:
+                            print("Det skal være et tal!\n")
+                            continue
                 # checks if it matchs the options
                 for i in quiz_set["valgmuligheder"]:
                     # the first letter in the option
-                    if gaet.upper() == "I":
-                        try:
-                            beloeb = int(input("Hvor mange penge vil du investere: "))
-                        except:
-                            print("Det skal være et tal!\n")
+
                     if gaet.upper() == i["tekst"][0]:
                         # checks if you can afford
                         if penge - i["pris"] >= 0:
@@ -80,4 +88,3 @@ while running:
                         else:
                             print("Du har ikke råd til det")
             input(f"Penge i alt: {penge}")
-
