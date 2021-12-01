@@ -2,12 +2,25 @@ import pygame
 import pygame_stuff.progress_bar
 import random
 
+
+def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge):
+    print(f"{gamle_penge} - {pris} = ")
+    input(nye_penge)
+    print(f"+ {din_inkomst} =")
+    print(f"Penge i alt {nye_penge}")
+
+
 screen = pygame.display.set_mode((200, 200))
 
 pygame.display.set_caption("FIRE-spillet")
 
 pygame.display.flip()
 running = True
+
+gamle_penge = 0
+din_inkomst = 0
+nye_penge = 0
+pris = 0
 
 while running:
     for event in pygame.event.get():
@@ -78,7 +91,14 @@ while running:
                                 elif gevinst == 0:
                                     print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
                                 inkomst += gevinst
+
+                                # for printing the stuff
+                                gamle_penge = penge
                                 penge -= beloeb
+                                nye_penge = penge
+                                din_inkomst = inkomst
+                                pris = beloeb
+
                                 run = False
                                 break
                         except:
@@ -93,16 +113,18 @@ while running:
                         # checks if you can afford
                         if penge - i["pris"] >= 0:
                             points += int(i["point"])
-                            print(f"{penge} - {i['pris']} = ")
-                            # prisen du skal betale
-                            penge -= i["pris"]
-                            input(penge)
-                            print(f"+ {inkomst} =")
                             # evt asset
                             inkomst += i["inkomststigning"]
-                            # du får løn
+
+                            # for the print
+                            gamle_penge = penge
+                            pris = i["pris"]
+                            din_inkomst = inkomst
+                            penge -= i["pris"]
+                            nye_penge = penge
                             run = False
                         else:
                             print("Du har ikke råd til det")
             penge += inkomst
-            input(f"Penge i alt: {penge}")
+            show_calculation_after_every_round(gamle_penge=gamle_penge, pris=pris, din_inkomst=din_inkomst, nye_penge=nye_penge)
+
