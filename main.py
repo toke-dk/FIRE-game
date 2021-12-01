@@ -47,14 +47,20 @@ while running:
         for quiz_set in quiz_sets:
             quiz_set_items = list(quiz_set.items())
             print(f'\nPenge: {penge}, Inkomst: {inkomst} \n{quiz_set["spørgsmål"]}')
+
+            # prints the options
             for i in quiz_set["valgmuligheder"]:
                 print(f'{i["tekst"]} : {i["pris"]}kr')
+
+            # it only stops when typed correct
             run = True
             while run:
                 # dette er fra den anden fil
                 pygame_stuff.progress_bar.update_bar(screen)
 
                 gaet = input("Skriv(A,B,C,I): ")
+
+                # investing
                 if gaet.upper() == "I":
                     while True:
                         try:
@@ -67,6 +73,7 @@ while running:
                         except:
                             print("Det skal være et tal!\n")
                             continue
+
                 # checks if it matchs the options
                 for i in quiz_set["valgmuligheder"]:
                     # the first letter in the option
