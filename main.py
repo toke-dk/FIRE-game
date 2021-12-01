@@ -127,4 +127,13 @@ while running:
                             print("Du har ikke råd til det")
             penge += inkomst
             show_calculation_after_every_round(gamle_penge=gamle_penge, pris=pris, din_inkomst=din_inkomst, nye_penge=nye_penge)
+        while True:
+            spil_igen = input("Vil du spille en gang til (j/n)")
+            if spil_igen.lower() == "j":
+                input("Starter nu runde\n")
+                break
+            elif spil_igen.lower() == "n":
+                print("Godt spillet :)")
+                running = False
+                break
 
