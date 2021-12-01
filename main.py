@@ -74,8 +74,8 @@ def choose_crypto(penge, inkomst):
     return gamle_penge, nye_penge, din_inkomst, pris
 
 
-width = 400
-height = 400
+width = 800
+height = 800
 screen = pygame.display.set_mode((width, height))
 
 pygame.display.set_caption("FIRE-spillet")
@@ -129,14 +129,25 @@ while running:
             quiz_set_items = list(quiz_set.items())
 
             # text on pygame
-            penge_tekst = font.render(f"Point: {points}", False, (250, 250, 0))
-            inkomst_tekst = font.render(f"Indkomst: {inkomst}", False, (250, 250, 0))
+            penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
+            inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
 
-            penge_tekst_rect = penge_tekst.get_rect()
             inkomst_tekst_rect = inkomst_tekst.get_rect()
+            penge_tekst_rect = penge_tekst.get_rect()
 
             penge_tekst_rect.bottomright = (width, height)
             inkomst_tekst_rect.bottomleft = (0, height)
+
+            screen.blit(penge_tekst, penge_tekst_rect)
+            screen.blit(inkomst_tekst, inkomst_tekst_rect)
+
+            # spørgsmål
+            question_text = font.render(f"{quiz_set['spørgsmål']}", False, (250, 250, 0))
+
+            question_text_rect = question_text.get_rect()
+
+            question_text_rect.center = (width//2, height//10)
+            screen.blit(question_text, question_text_rect)
 
             print(f'\nPenge: {penge}, Inkomst: {inkomst} \n{quiz_set["spørgsmål"]}')
 
@@ -181,6 +192,4 @@ while running:
 
             # updates information
             screen.fill(color=(0,0,0))
-            screen.blit(penge_tekst, penge_tekst_rect)
-            screen.blit(inkomst_tekst, inkomst_tekst_rect)
 
