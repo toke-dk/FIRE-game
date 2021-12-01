@@ -8,7 +8,6 @@ def update_bar(screen, point):
     point_max = 100
     point_min = -100
     x_load = 270
-    point = 110
     black = (0, 0, 0)
     white = (255, 255, 255)
     screen.fill(white)
