@@ -69,6 +69,17 @@ while running:
                                 # is doing except
                                 print("Du har ikke råd")
                             else:
+                                # gevinst either raises 15 percent or falls 15 percent
+                                gevinst = random.randint(int(-(40/100*beloeb)), int(40/100*beloeb))
+                                if gevinst < 0:
+                                    print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
+                                elif gevinst > 0:
+                                    print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")
+                                elif gevinst == 0:
+                                    print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
+                                inkomst += gevinst
+                                penge -= beloeb
+                                run = False
                                 break
                         except:
                             print("Det skal være et tal!\n")
