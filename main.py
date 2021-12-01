@@ -1,5 +1,6 @@
 import pygame
 import pygame_stuff.progress_bar
+import random
 
 screen = pygame.display.set_mode((200, 200))
 
@@ -31,13 +32,14 @@ while running:
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
-            {"spørgsmål": "Hvad vil du helst købe?",
+            {"spørgsmål": "Hvad vil du helst købeee?",
              "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
         ]
+        random.shuffle(quiz_sets)
         points = 0
         penge = 200
         inkomst = 100
