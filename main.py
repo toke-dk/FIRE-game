@@ -74,7 +74,9 @@ def choose_crypto(penge, inkomst):
     return gamle_penge, nye_penge, din_inkomst, pris
 
 
-screen = pygame.display.set_mode((200, 200))
+width = 400
+height = 400
+screen = pygame.display.set_mode((width, height))
 
 pygame.display.set_caption("FIRE-spillet")
 
@@ -85,6 +87,8 @@ gamle_penge = 0
 din_inkomst = 0
 nye_penge = 0
 pris = 0
+
+font = pygame.font.Font("freesansbold.ttf", 32)
 
 while running:
     for event in pygame.event.get():
@@ -123,6 +127,17 @@ while running:
 
         for quiz_set in quiz_sets:
             quiz_set_items = list(quiz_set.items())
+
+            # text on pygame
+            penge_tekst = font.render(f"Point: {points}", False, (250, 250, 0))
+            inkomst_tekst = font.render(f"Indkomst: {inkomst}", False, (250, 250, 0))
+
+            penge_tekst_rect = penge_tekst.get_rect()
+            inkomst_tekst_rect = inkomst_tekst.get_rect()
+
+            penge_tekst_rect.bottomright = (width, height)
+            inkomst_tekst_rect.bottomleft = (0, height)
+
             print(f'\nPenge: {penge}, Inkomst: {inkomst} \n{quiz_set["spørgsmål"]}')
 
             # prints the options
@@ -163,4 +178,9 @@ while running:
                         else:
                             print("Du har ikke råd til det")
             input(f"Penge i alt: {penge}")
+
+            # updates information
+            screen.fill(color=(0,0,0))
+            screen.blit(penge_tekst, penge_tekst_rect)
+            screen.blit(inkomst_tekst, inkomst_tekst_rect)
 
