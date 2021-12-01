@@ -101,8 +101,8 @@ while running:
                             # evt asset
                             inkomst += i["inkomststigning"]
                             # du får løn
-                            penge += inkomst
                             run = False
                         else:
                             print("Du har ikke råd til det")
+            penge += inkomst
             input(f"Penge i alt: {penge}")
