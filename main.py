@@ -1,6 +1,8 @@
-import pygame
+import pygame.display
+from pygame.locals import *
 import pygame_stuff.progress_bar
 import random
+from sys import exit
 
 
 def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge):
@@ -11,36 +13,65 @@ def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge
 
 
 def choose_crypto(penge, inkomst):
+    gevinst = 0
     while True:
-        try:
-            beloeb = int(input("Hvor mange penge vil du investere: "))
-            if beloeb > penge:
-                # is doing except
-                print("Du har ikke råd")
+        input("Du kan investere i 3 forskellige risicier")
+        print("A) Bitcoin (stor risiko)")
+        print("B) s&p 500 (lige risiko)")
+        print("C) Disney (lille risiko)")
+        while True:
+            type_invest = input("Hvilken: ")
+            if type_invest.lower() == "a" or type_invest.lower() == "b" or type_invest.lower() == "c":
+                break
             else:
-                # gevinst either raises 15 percent or falls 15 percent
-                gevinst = random.randint(int(-(40 / 100 * beloeb)), int(40 / 100 * beloeb))
-                if gevinst < 0:
-                    print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
-                elif gevinst > 0:
-                    print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")
-                elif gevinst == 0:
-                    print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
-                inkomst += gevinst
+                print("Det skal være et af valgmulighederne")
+        while True:
+            try:
+                beloeb = int(input("Hvor mange penge vil du investere: "))
+                if beloeb > penge:
+                    print('Du har ikke råd')
+                    continue
+                elif type(beloeb) != int:
+                    continue
+                break
+            except:
+                print("Det skal være et tal")
+                continue
+        sandsynlighed = random.randint(1, 10)
+        # the award system
+        if type_invest.lower() == "a":
+            if sandsynlighed <= 2:
+                gevinst = beloeb
+            elif sandsynlighed > 2:
+                gevinst = -(beloeb/2)
+            break
+        elif type_invest.lower() == "b":
+            if sandsynlighed <= 5:
+                gevinst = beloeb/7
+            elif sandsynlighed > 5:
+                gevinst = beloeb/8
+            break
+        elif type_invest.lower() == "c":
+            if sandsynlighed <= 9:
+                gevinst = beloeb/11
+            elif sandsynlighed > 9:
+                gevinst = beloeb/13
+            break
+    gevinst = int(gevinst)
+    if gevinst < 0:
+        print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
+    elif gevinst > 0:
+        print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")
+    elif gevinst == 0:
+        print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
 
-                # for printing the stuff
-                gamle_penge = penge
-                penge -= beloeb
-                nye_penge = penge
-                din_inkomst = inkomst
-                pris = beloeb
-
-                return gamle_penge, nye_penge, din_inkomst, pris
-        except:
-            print("Det skal være et tal!\n")
-            continue
-    return
-
+    inkomst += int(gevinst)
+    gamle_penge = penge
+    penge -= beloeb
+    nye_penge = penge
+    din_inkomst = inkomst
+    pris = beloeb
+    return gamle_penge, nye_penge, din_inkomst, pris
 
 
 screen = pygame.display.set_mode((200, 200))
@@ -108,7 +139,9 @@ while running:
 
                 # investing
                 if gaet.upper() == "I":
-                    gamle_penge, nye_penge, din_inkomst, pris = choose_crypto(penge, inkomst)
+                    # det er defineret ovenfor
+                    gamle_penge, nye_penge, inkomst, pris = choose_crypto(penge, inkomst)
+                    din_inkomst = inkomst
                     run = False
                 # checks if it matchs the options
                 for i in quiz_set["valgmuligheder"]:
