@@ -10,6 +10,39 @@ def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge
     print(f"Penge i alt {nye_penge}")
 
 
+def choose_crypto(penge, inkomst):
+    while True:
+        try:
+            beloeb = int(input("Hvor mange penge vil du investere: "))
+            if beloeb > penge:
+                # is doing except
+                print("Du har ikke råd")
+            else:
+                # gevinst either raises 15 percent or falls 15 percent
+                gevinst = random.randint(int(-(40 / 100 * beloeb)), int(40 / 100 * beloeb))
+                if gevinst < 0:
+                    print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
+                elif gevinst > 0:
+                    print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")
+                elif gevinst == 0:
+                    print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
+                inkomst += gevinst
+
+                # for printing the stuff
+                gamle_penge = penge
+                penge -= beloeb
+                nye_penge = penge
+                din_inkomst = inkomst
+                pris = beloeb
+
+                return gamle_penge, nye_penge, din_inkomst, pris
+        except:
+            print("Det skal være et tal!\n")
+            continue
+    return
+
+
+
 screen = pygame.display.set_mode((200, 200))
 
 pygame.display.set_caption("FIRE-spillet")
@@ -75,36 +108,8 @@ while running:
 
                 # investing
                 if gaet.upper() == "I":
-                    while True:
-                        try:
-                            beloeb = int(input("Hvor mange penge vil du investere: "))
-                            if beloeb > penge:
-                                # is doing except
-                                print("Du har ikke råd")
-                            else:
-                                # gevinst either raises 15 percent or falls 15 percent
-                                gevinst = random.randint(int(-(40/100*beloeb)), int(40/100*beloeb))
-                                if gevinst < 0:
-                                    print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
-                                elif gevinst > 0:
-                                    print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")
-                                elif gevinst == 0:
-                                    print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
-                                inkomst += gevinst
-
-                                # for printing the stuff
-                                gamle_penge = penge
-                                penge -= beloeb
-                                nye_penge = penge
-                                din_inkomst = inkomst
-                                pris = beloeb
-
-                                run = False
-                                break
-                        except:
-                            print("Det skal være et tal!\n")
-                            continue
-
+                    gamle_penge, nye_penge, din_inkomst, pris = choose_crypto(penge, inkomst)
+                    run = False
                 # checks if it matchs the options
                 for i in quiz_set["valgmuligheder"]:
                     # the first letter in the option
