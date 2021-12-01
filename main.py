@@ -1,17 +1,20 @@
 import pygame
 import pygame_stuff.progress_bar
+from colour import Color
+
+pygame.init()
 
 screen = pygame.display.set_mode((200, 200))
 
-pygame.display.set_caption("FIRE-spillet")
+pygame.display.set_caption("FIRE-spil")
 
 pygame.display.flip()
 running = True
 
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+red = Color("#0043A7")
+colors = list(red.range_to(Color("green"), 10))
+
+while True:
         quiz_sets = [
             {"spørgsmål": "Hvad vil du helst købe?",
              "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100, "inkomststigning": 10},
@@ -50,7 +53,7 @@ while running:
             run = True
             while run:
                 # dette er fra den anden fil
-                pygame_stuff.progress_bar.update_bar(screen)
+                pygame_stuff.progress_bar.update_bar(screen, points)
 
                 gaet = input("Skriv(A,B,C): ")
                 # checks if it matchs the options
