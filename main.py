@@ -19,13 +19,25 @@ def choose_crypto(penge, inkomst):
         print("A) Bitcoin (stor risiko)")
         print("B) s&p 500 (lige risiko)")
         print("C) Disney (lille risiko)")
-        type_invest = input("Hvilken: ")
-        beloeb = int(input("Hvor mange penge vil du investere: "))
+        while True:
+            type_invest = input("Hvilken: ")
+            if type_invest.lower() == "a" or type_invest.lower() == "b" or type_invest.lower() == "c":
+                break
+            else:
+                print("Det skal være et af valgmulighederne")
+        while True:
+            try:
+                beloeb = int(input("Hvor mange penge vil du investere: "))
+                if beloeb > penge:
+                    print('Du har ikke råd')
+                    continue
+                elif type(beloeb) != int:
+                    continue
+                break
+            except:
+                print("Det skal være et tal")
+                continue
         sandsynlighed = random.randint(1, 10)
-        if beloeb > penge:
-            print('Du har ikke råd')
-        elif type(beloeb) != type(int):
-            continue
         # the award system
         if type_invest.lower() == "a":
             if sandsynlighed <= 2:
@@ -45,7 +57,7 @@ def choose_crypto(penge, inkomst):
             elif sandsynlighed > 9:
                 gevinst = beloeb/13
             break
-
+    gevinst = int(gevinst)
     if gevinst < 0:
         print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
     elif gevinst > 0:
