@@ -184,7 +184,8 @@ pygame.display.flip()
 
 arrow = {"is_selected" : True, "number" : 0, "color" : (255,255,0)}
 random.shuffle(quiz_sets)
-user_text = ""
+investing_amount = ""
+investing_amount_int = 0
 
 while running:
     for event in pygame.event.get():
@@ -240,25 +241,56 @@ while running:
                     arrow["number"] = 3
 
                 if event.key == pygame.K_BACKSPACE:
-                    user_text = user_text[:-1]
+                    investing_amount = investing_amount[:-1]
                 # accepting numbers
                 if event.key == K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
-                    print(user_text + event.unicode)
                     try:
-                        if int(user_text + event.unicode) <= penge:
-                            user_text += event.unicode
+                        if int(investing_amount + event.unicode) <= penge:
+                            investing_amount += event.unicode
+                            investing_amount_int = int(investing_amount)
+                            print(f"invest: {investing_amount}")
                     except:
                         ""
                 if event.key == pygame.K_RETURN:
-                    # the amount to invest
-                    user_text = ""
+                    if investing_amount != "":
+                        sandsynlighed = random.randint(1,10)
 
-                    # new round
-                    screen.fill((0,0,0))
-                    invest_screen = False
-                    question_id += 1
-                    quiz_set = next_question(quiz_sets, question_id)
-            text_surface = font.render(user_text, True, (255, 255, 0))
+                        # they pay for the stock
+                        penge -= investing_amount_int
+
+                        # (if option 1)
+                        if arrow["number"] == 0:
+                            # (youve won)
+                            if sandsynlighed <= 3:
+                                print("win")
+                                penge += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
+                            elif sandsynlighed > 3:
+                                print("lose")
+                                penge += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
+                                print(f'{investing_amount_int * investing_sets[arrow["number"]]["losing_price"]}')
+                        if arrow["number"] == 1:
+                            # (youve won)
+                            if sandsynlighed <= 5:
+                                penge += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
+                            elif sandsynlighed > 5:
+                                penge += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
+                        if arrow["number"] == 2:
+                            # (youve won)
+                            if sandsynlighed <= 9:
+                                penge += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
+                            elif sandsynlighed > 10:
+                                penge += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
+
+                        print(penge)
+                        # the amount to invest
+                        investing_amount = ""
+
+                        # new round
+                        screen.fill((0,0,0))
+                        invest_screen = False
+                        question_id += 1
+                        quiz_set = next_question(quiz_sets, question_id)
+            text_surface = font.render(investing_amount, True, (255, 255, 0))
             screen.blit(text_surface, input_rect)
             pygame.display.flip()
             # '
