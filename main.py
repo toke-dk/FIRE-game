@@ -181,10 +181,17 @@ while running:
         screen.blit(question_text, question_text_rect)
 
         # the arrow
+        if quiz_set["valgmuligheder"][arrow["number"]]["pris"] > penge:
+            arrow["color"] = (255, 0,0)
+        else:
+            arrow["color"] = (255, 255, 0)
+
         arrow_text = font.render(f">", False, arrow["color"])
         arrow_text_rect = arrow_text.get_rect()
         arrow_text_rect.topleft = (width // 10 - 20, height // 10 + 50 * (arrow["number"] + 1))
         screen.blit(arrow_text, arrow_text_rect)
+
+
 
         # prints the options
         pos = 0
@@ -218,6 +225,7 @@ while running:
                 arrow["number"] = 3
 
             if event.key == pygame.K_RETURN:
+                arrow["number"] = 0
                 if a_selected and penge > quiz_set["valgmuligheder"][0]["pris"]:
                     penge -= quiz_set["valgmuligheder"][0]["pris"]
                     inkomst += quiz_set["valgmuligheder"][0]["inkomststigning"]
