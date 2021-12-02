@@ -148,6 +148,7 @@ c_selected = False
 c_color = (255,255,0)
 i_selected = False
 i_color = (255,255,0)
+arrow = {"is_selected" : True, "number" : 0, "color" : (255,255,0)}
 
 while running:
     for event in pygame.event.get():
@@ -179,39 +180,12 @@ while running:
         screen.blit(inkomst_tekst, inkomst_tekst_rect)
         screen.blit(question_text, question_text_rect)
 
-        if (a_selected):
-            if penge < quiz_set["valgmuligheder"][0]["pris"]:
-                a_color = (255, 0, 0)
-            a = font.render(f">", False, a_color)
-            a_rect = a.get_rect()
+        # the arrow
+        arrow_text = font.render(f">", False, arrow["color"])
+        arrow_text_rect = arrow_text.get_rect()
+        arrow_text_rect.topleft = (width // 10 - 20, height // 10 + 50 * (arrow["number"] + 1))
+        screen.blit(arrow_text, arrow_text_rect)
 
-            a_rect.topleft = (width // 10 - 20, height // 10 + 50 * 1)
-
-            screen.blit(a, a_rect)
-        elif (b_selected):
-            if penge < quiz_set["valgmuligheder"][1]["pris"]:
-                b_color = (255, 0, 0)
-            b = font.render(f">", False, b_color)
-            b_rect = b.get_rect()
-
-            b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 2)
-
-            screen.blit(b, b_rect)
-        elif (c_selected):
-            if penge < quiz_set["valgmuligheder"][2]["pris"]:
-                c_color = (255, 0, 0)
-            b = font.render(f">", False, c_color)
-            b_rect = b.get_rect()
-            b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 3)
-
-            screen.blit(b, b_rect)
-        elif (i_selected):
-            b = font.render(f">", False, i_color)
-            b_rect = b.get_rect()
-
-            b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 4)
-
-            screen.blit(b, b_rect)
         # prints the options
         pos = 0
         for i in quiz_set["valgmuligheder"]:
@@ -221,7 +195,7 @@ while running:
             question_text_rect.topleft = (width // 10, height // 10 + pos)
             screen.blit(question_text, question_text_rect)
 
-        invester_tekst = font.render(f"I : Invester", False, (250, 250, 0))
+        invester_tekst = font.render(f"I. Invester", False, (250, 250, 0))
 
         invester_tekst_rect = invester_tekst.get_rect()
 
@@ -233,25 +207,15 @@ while running:
 
         if event.type == pygame.KEYDOWN and question_id != len(quiz_sets):
             if event.key == pygame.K_a:
-                a_selected = True
-                b_selected = False
-                c_selected = False
-                i_selected = False
+                arrow["number"] = 0
             if event.key == pygame.K_b:
-                a_selected = False
-                b_selected = True
-                c_selected = False
-                i_selected = False
+                arrow["number"] = 1
+
             if event.key == pygame.K_c:
-                a_selected = False
-                b_selected = False
-                c_selected = True
-                i_selected = False
+                arrow["number"] = 2
+
             if event.key == pygame.K_i:
-                a_selected = False
-                b_selected = False
-                c_selected = False
-                i_selected = True
+                arrow["number"] = 3
 
             if event.key == pygame.K_RETURN:
                 if a_selected and penge > quiz_set["valgmuligheder"][0]["pris"]:
