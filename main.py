@@ -83,19 +83,19 @@ font = pygame.font.Font("freesansbold.ttf", 32)
 
 quiz_sets = [
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 100, "inkomststigning": 10},
+             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Bilfd", "point": 2, "pris": 100, "inkomststigning": 10},
+             "valgmuligheder": [{"tekst": "A. Bilfd", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Biadl", "point": 2, "pris": 100, "inkomststigning": 10},
+             "valgmuligheder": [{"tekst": "A. Biadl", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
@@ -141,9 +141,13 @@ for i in quiz_set["valgmuligheder"]:
 pygame.display.flip()
 
 a_selected = True
+a_color = (255,255,0)
 b_selected = False
+b_color = (255,255,0)
 c_selected = False
+c_color = (255,255,0)
 i_selected = False
+i_color = (255,255,0)
 
 while running:
     for event in pygame.event.get():
@@ -176,27 +180,33 @@ while running:
         screen.blit(question_text, question_text_rect)
 
         if (a_selected):
-            a = font.render(f">", False, (250, 250, 0))
+            if penge < quiz_set["valgmuligheder"][0]["pris"]:
+                a_color = (255, 0, 0)
+            a = font.render(f">", False, a_color)
             a_rect = a.get_rect()
 
             a_rect.topleft = (width // 10 - 20, height // 10 + 50 * 1)
 
             screen.blit(a, a_rect)
         elif (b_selected):
-            b = font.render(f">", False, (250, 250, 0))
+            if penge < quiz_set["valgmuligheder"][1]["pris"]:
+                b_color = (255, 0, 0)
+            b = font.render(f">", False, b_color)
             b_rect = b.get_rect()
 
             b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 2)
 
             screen.blit(b, b_rect)
         elif (c_selected):
-            b = font.render(f">", False, (250, 250, 0))
+            if penge < quiz_set["valgmuligheder"][2]["pris"]:
+                c_color = (255, 0, 0)
+            b = font.render(f">", False, c_color)
             b_rect = b.get_rect()
             b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 3)
 
             screen.blit(b, b_rect)
         elif (i_selected):
-            b = font.render(f">", False, (250, 250, 0))
+            b = font.render(f">", False, i_color)
             b_rect = b.get_rect()
 
             b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 4)
@@ -244,6 +254,22 @@ while running:
                 i_selected = True
 
             if event.key == pygame.K_RETURN:
+                if a_selected and penge > quiz_set["valgmuligheder"][0]["pris"]:
+                    penge -= quiz_set["valgmuligheder"][0]["pris"]
+                    inkomst += quiz_set["valgmuligheder"][0]["inkomststigning"]
+                    points += quiz_set["valgmuligheder"][0]["point"]
+
+                if b_selected and penge > quiz_set["valgmuligheder"][1]["pris"]:
+                    penge -= quiz_set["valgmuligheder"][1]["pris"]
+                    inkomst += quiz_set["valgmuligheder"][1]["inkomststigning"]
+                    points += quiz_set["valgmuligheder"][1]["point"]
+
+
+                if c_selected and penge > quiz_set["valgmuligheder"][2]["pris"]:
+                    penge -= quiz_set["valgmuligheder"][2]["pris"]
+                    inkomst += quiz_set["valgmuligheder"][2]["inkomststigning"]
+                    points += quiz_set["valgmuligheder"][2]["point"]
+
                 screen.fill((0,0,0))
                 print("fda")
                 quiz_set = next_question(quiz_sets, question_id)
