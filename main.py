@@ -200,58 +200,7 @@ while running:
             text_surface = font.render(investing_amount, True, (255, 255, 0))
             screen.blit(text_surface, input_rect)
             pygame.display.flip()
-            # '
-            # gevinst = 0
-            # while True:
-            #     while True:
-            #         if type_invest.lower() == "a" or type_invest.lower() == "b" or type_invest.lower() == "c":
-            #             break
-            #         else:
-            #             'print("Det skal være et af valgmulighederne")'
-            #     while True:
-            #         try:
-            #             if beloeb > penge:
-            #                 print('Du har ikke råd')
-            #                 continue
-            #             elif type(beloeb) != int:
-            #                 continue
-            #             break
-            #         except:
-            #             continue
-            #     sandsynlighed = random.randint(1, 10)
-            #     # the award system
-            #     if type_invest.lower() == "a":
-            #         if sandsynlighed <= 2:
-            #             gevinst = beloeb
-            #         elif sandsynlighed > 2:
-            #             gevinst = -(beloeb/2)
-            #         break
-            #     elif type_invest.lower() == "b":
-            #         if sandsynlighed <= 5:
-            #             gevinst = beloeb/7
-            #         elif sandsynlighed > 5:
-            #             gevinst = beloeb/8
-            #         break
-            #     elif type_invest.lower() == "c":
-            #         if sandsynlighed <= 9:
-            #             gevinst = beloeb/11
-            #         elif sandsynlighed > 9:
-            #             gevinst = beloeb/13
-            #         break
-            # gevinst = int(gevinst)
-            # if gevinst < 0:
-            #     'print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")'
-            # elif gevinst > 0:
-            #     'print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")'
-            # elif gevinst == 0:
-            #     'print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")''
-            #
-            # inkomst += int(gevinst)
-            # gamle_penge = penge
-            # penge -= beloeb
-            # nye_penge = penge
-            # din_inkomst = inkomst
-            # pris = beloeb
+            
         # if the screen is normal
         else:
             if event.type == pygame.KEYDOWN and question_id == len(quiz_sets):
