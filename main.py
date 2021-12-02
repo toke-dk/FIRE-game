@@ -242,7 +242,8 @@ while running:
                 if event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
                 # accepting numbers
-                if event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
+                if event.key == K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
+                    print(user_text + event.unicode)
                     try:
                         if int(user_text + event.unicode) <= penge:
                             user_text += event.unicode
