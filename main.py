@@ -18,26 +18,6 @@ def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge
 def choose_crypto(penge, inkomst):
     gevinst = 0
     while True:
-        print("A) Bitcoin (stor risiko)")
-        print("B) s&p 500 (lige risiko)")
-        print("C) Disney (lille risiko)")
-        while True:
-            if type_invest.lower() == "a" or type_invest.lower() == "b" or type_invest.lower() == "c":
-                break
-            else:
-                print("Det skal være et af valgmulighederne")
-        while True:
-            try:
-                beloeb = 2
-                if beloeb > penge:
-                    print('Du har ikke råd')
-                    continue
-                elif type(beloeb) != int:
-                    continue
-                break
-            except:
-                print("Det skal være et tal")
-                continue
         sandsynlighed = random.randint(1, 10)
         # the award system
         if type_invest.lower() == "a":
@@ -59,13 +39,6 @@ def choose_crypto(penge, inkomst):
                 gevinst = beloeb/13
             break
     gevinst = int(gevinst)
-    if gevinst < 0:
-        print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
-    elif gevinst > 0:
-        print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")
-    elif gevinst == 0:
-        print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
-
     inkomst += int(gevinst)
     gamle_penge = penge
     penge -= beloeb
@@ -130,11 +103,10 @@ while running:
             quiz_set_items = list(quiz_set.items())
             button1 = pygame_stuff.button_class.Button(screen,50,100,200,50,(0, 0, 255),(255, 255, 255),"hello",(0, 0, 0),font)
             x, y = pygame.mouse.get_pos()
-            print(x, y)
             button1.draw(x, y)
             click_x,click_y = pygame.mouse.get_pos()
             if button1.action(click_x, click_y):
-                print("Button Clicked")
+                print("Button show")
 
             # text on pygame
             penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
@@ -153,8 +125,6 @@ while running:
             screen.blit(inkomst_tekst, inkomst_tekst_rect)
             screen.blit(question_text, question_text_rect)
 
-            print(f'\nPenge: {penge}, Inkomst: {inkomst} \n{quiz_set["spørgsmål"]}')
-
             # prints the options
             pos = 0
             for i in quiz_set["valgmuligheder"]:
@@ -164,7 +134,6 @@ while running:
                 question_text_rect.topleft = (width//10, height//10 + pos)
                 screen.blit(question_text, question_text_rect)
 
-                print(f'{i["tekst"]} : {i["pris"]}kr')
 
             # it only stops when typed correct
             run = True
@@ -187,17 +156,15 @@ while running:
                         # checks if you can afford
                         if penge - i["pris"] >= 0:
                             points += int(i["point"])
-                            print(f"{penge} - {i['pris']} = ")
                             # prisen du skal betale
                             penge -= i["pris"]
-                            print(f"+ {inkomst} =")
                             # evt asset
                             inkomst += i["inkomststigning"]
                             # du får løn
                             penge += inkomst
                             run = False
                         else:
-                            print("Du har ikke råd til det")
+                            ""
 
             # updates information
             screen.fill(color=(0,0,0))
