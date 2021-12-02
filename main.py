@@ -146,7 +146,7 @@ quiz_sets = [
              "svar": "A"
              },
         ]
-investing_sets = [{"option": "A. Bitcoin (stor risiko)", "winning_price": 1 + 1, "losing_price": 1 - 1/2},
+investing_sets = [{"option": "A. Bitcoin (stor risiko)", "winning_price": 1 + 1.2, "losing_price": 1 - 1},
                   {"option": "B. Disney (mellem risiko)", "winning_price": 1 + 1/7, "losing_price": 1 - 1/8},
                   {"option": "C. s&p500 (lille risiko)", "winning_price": 1 + 1/11, "losing_price": 1 - 1/13},]
 random.shuffle(quiz_sets)
@@ -197,7 +197,7 @@ while running:
 
             penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
             inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
-            question_text = font.render(f"Du kan vælge og investerer i 3 forskellige ting: ", False, (250, 250, 0))
+            question_text = font.render(f"Du kan vælge og investrer i 3 forskellige ting: ", False, (250, 250, 0))
 
             penge_tekst_rect = penge_tekst.get_rect()
             inkomst_tekst_rect = inkomst_tekst.get_rect()
@@ -391,7 +391,7 @@ while running:
                 question_text_rect.topleft = (width // 10, height // 10 + pos)
                 screen.blit(question_text, question_text_rect)
 
-            invester_tekst = font.render(f"I. Invester", False, (250, 250, 0))
+            invester_tekst = font.render(f"I. Investér", False, (250, 250, 0))
 
             invester_tekst_rect = invester_tekst.get_rect()
 
