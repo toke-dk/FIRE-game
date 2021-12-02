@@ -96,7 +96,7 @@ quiz_sets = [
              },
             {"spørgsmål": "Hvad vil du helst købe?",
              "valgmuligheder": [{"tekst": "A. Biadl", "point": 2, "pris": 300, "inkomststigning": 10},
-                                {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
+                                {"tekst": "B. Tog", "point": 5, "pris": 300, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
@@ -140,14 +140,6 @@ for i in quiz_set["valgmuligheder"]:
     screen.blit(question_text, question_text_rect)
 pygame.display.flip()
 
-a_selected = True
-a_color = (255,255,0)
-b_selected = False
-b_color = (255,255,0)
-c_selected = False
-c_color = (255,255,0)
-i_selected = False
-i_color = (255,255,0)
 arrow = {"is_selected" : True, "number" : 0, "color" : (255,255,0)}
 
 while running:
@@ -181,7 +173,9 @@ while running:
         screen.blit(question_text, question_text_rect)
 
         # the arrow
-        if quiz_set["valgmuligheder"][arrow["number"]]["pris"] > penge:
+        if arrow["number"] == 3:
+            arrow["color"] = (255, 255, 0)
+        elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] > penge:
             arrow["color"] = (255, 0,0)
         else:
             arrow["color"] = (255, 255, 0)
@@ -217,7 +211,6 @@ while running:
                 arrow["number"] = 0
             if event.key == pygame.K_b:
                 arrow["number"] = 1
-
             if event.key == pygame.K_c:
                 arrow["number"] = 2
 
@@ -226,51 +219,8 @@ while running:
 
             if event.key == pygame.K_RETURN:
                 arrow["number"] = 0
-                if a_selected and penge > quiz_set["valgmuligheder"][0]["pris"]:
-                    penge -= quiz_set["valgmuligheder"][0]["pris"]
-                    inkomst += quiz_set["valgmuligheder"][0]["inkomststigning"]
-                    points += quiz_set["valgmuligheder"][0]["point"]
 
-                if b_selected and penge > quiz_set["valgmuligheder"][1]["pris"]:
-                    penge -= quiz_set["valgmuligheder"][1]["pris"]
-                    inkomst += quiz_set["valgmuligheder"][1]["inkomststigning"]
-                    points += quiz_set["valgmuligheder"][1]["point"]
-
-
-                if c_selected and penge > quiz_set["valgmuligheder"][2]["pris"]:
-                    penge -= quiz_set["valgmuligheder"][2]["pris"]
-                    inkomst += quiz_set["valgmuligheder"][2]["inkomststigning"]
-                    points += quiz_set["valgmuligheder"][2]["point"]
-
-                screen.fill((0,0,0))
-                print("fda")
                 quiz_set = next_question(quiz_sets, question_id)
-
-                # text on pygame
-                penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
-                inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
-                question_text = font.render(f"{quiz_set['spørgsmål']}", False, (250, 250, 0))
-
-                penge_tekst_rect = penge_tekst.get_rect()
-                inkomst_tekst_rect = inkomst_tekst.get_rect()
-                question_text_rect = question_text.get_rect()
-
-                penge_tekst_rect.bottomright = (width, height)
-                inkomst_tekst_rect.bottomleft = (0, height)
-                question_text_rect.center = (width // 2, height // 10)
-
-                screen.blit(penge_tekst, penge_tekst_rect)
-                screen.blit(inkomst_tekst, inkomst_tekst_rect)
-                screen.blit(question_text, question_text_rect)
-
-                # prints the options
-                pos = 0
-                for i in quiz_set["valgmuligheder"]:
-                    pos += 50
-                    question_text = font.render(f"{i['tekst']} : {i['pris']},-", False, (250, 250, 0))
-                    question_text_rect = penge_tekst.get_rect()
-                    question_text_rect.topleft = (width // 10, height // 10 + pos)
-                    screen.blit(question_text, question_text_rect)
                 question_id += 1
             if event.key == pygame.K_a:
                 print("a")
