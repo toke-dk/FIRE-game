@@ -55,7 +55,7 @@ quiz_sets = [
         ]
 investing_sets = [{"option": "A. Bitcoin (stor risiko)", "winning_price": 1 + 1.2, "losing_price": 1 - 1},
                   {"option": "B. Disney (mellem risiko)", "winning_price": 1 + 1/7, "losing_price": 1 - 1/8},
-                  {"option": "C. s&p500 (lille risiko)", "winning_price": 1 + 1/11, "losing_price": 1 - 1/13},]
+                  {"option": "C. S&P 500 (lille risiko)", "winning_price": 1 + 1/11, "losing_price": 1 - 1/13},]
 random.shuffle(quiz_sets)
 
 quiz_set = next_question(quiz_sets, question_id)
@@ -200,7 +200,7 @@ while running:
             text_surface = font.render(investing_amount, True, (255, 255, 0))
             screen.blit(text_surface, input_rect)
             pygame.display.flip()
-            
+
         # if the screen is normal
         else:
             if event.type == pygame.KEYDOWN and question_id == len(quiz_sets):
