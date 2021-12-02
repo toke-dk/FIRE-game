@@ -8,6 +8,12 @@ from sys import exit
 def next_question(quiz_sets, index):
     return quiz_sets[index]
 
+def set_text(string, coordx, coordy): #Function to set text
+
+    text = font.render(string, True, (0, 0, 0))
+    textRect = text.get_rect()
+    textRect.center = (coordx, coordy)
+    return (text, textRect)
 
 def invest_option(penge, inkomst):
     screen.fill((0,0,0))
@@ -16,11 +22,9 @@ def invest_option(penge, inkomst):
     question_text = font.render(f"Du kan vælge og investerer i 3 forskellige risici: ", False, (250, 250, 0))
 
     penge_tekst_rect = penge_tekst.get_rect()
-    inkomst_tekst_rect = inkomst_tekst.get_rect()
     question_text_rect = question_text.get_rect()
 
     penge_tekst_rect.bottomright = (width, height)
-    inkomst_tekst_rect.bottomleft = (0, height)
     question_text_rect.center = (width // 2, height // 10)
 
     screen.blit(penge_tekst, penge_tekst_rect)
@@ -180,6 +184,7 @@ pygame.display.flip()
 
 arrow = {"is_selected" : True, "number" : 0, "color" : (255,255,0)}
 random.shuffle(quiz_sets)
+user_text = ""
 
 while running:
     for event in pygame.event.get():
@@ -219,6 +224,10 @@ while running:
                 investing_text_rect = investing_text.get_rect()
                 investing_text_rect.topleft = (width // 10, height // 10 + pos)
                 screen.blit(investing_text, investing_text_rect)
+            # for typing
+            input_rect = pygame.Rect(50, height // 1.9, 140, 32)
+            color = (255, 255, 0)
+            pygame.draw.rect(screen, color, input_rect, 2)
 
             if event.type == KEYDOWN:
                 if event.key == pygame.K_a:
@@ -227,16 +236,29 @@ while running:
                     arrow["number"] = 1
                 if event.key == pygame.K_c:
                     arrow["number"] = 2
-
                 if event.key == pygame.K_i:
                     arrow["number"] = 3
 
+                if event.key == pygame.K_BACKSPACE:
+                    user_text = user_text[:-1]
+                # accepting numbers
+                if event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
+                    try:
+                        if int(user_text + event.unicode) <= penge:
+                            user_text += event.unicode
+                    except:
+                        ""
                 if event.key == pygame.K_RETURN:
+                    # the amount to invest
+                    user_text = ""
+
                     # new round
                     screen.fill((0,0,0))
                     invest_screen = False
                     question_id += 1
                     quiz_set = next_question(quiz_sets, question_id)
+            text_surface = font.render(user_text, True, (255, 255, 0))
+            screen.blit(text_surface, input_rect)
             pygame.display.flip()
             # '
             # gevinst = 0
