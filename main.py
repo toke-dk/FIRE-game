@@ -210,6 +210,15 @@ while running:
             question_text_rect = penge_tekst.get_rect()
             question_text_rect.topleft = (width // 10, height // 10 + pos)
             screen.blit(question_text, question_text_rect)
+
+        invester_tekst = font.render(f"I : Invester", False, (250, 250, 0))
+
+        invester_tekst_rect = invester_tekst.get_rect()
+
+        invester_tekst_rect.topleft = (width // 10, height // 10 + 50 * 4)
+
+        screen.blit(invester_tekst, invester_tekst_rect)
+
         pygame.display.flip()
 
         if event.type == pygame.KEYDOWN and question_id != len(quiz_sets):
