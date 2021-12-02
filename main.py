@@ -6,7 +6,7 @@ from sys import exit
 
 
 def next_question(quiz_sets, index):
-    return quiz_sets[index],
+    return quiz_sets[index]
 
 
 def choose_crypto(penge, inkomst):
@@ -109,6 +109,41 @@ quiz_sets = [
         ]
 
 quiz_set = next_question(quiz_sets, question_id)
+random.shuffle(quiz_sets)
+points = 0
+penge = 200
+inkomst = 100
+
+# text on pygame
+penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
+inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
+question_text = font.render(f"{quiz_set['spørgsmål']}", False, (250, 250, 0))
+
+penge_tekst_rect = penge_tekst.get_rect()
+inkomst_tekst_rect = inkomst_tekst.get_rect()
+question_text_rect = question_text.get_rect()
+
+penge_tekst_rect.bottomright = (width, height)
+inkomst_tekst_rect.bottomleft = (0, height)
+question_text_rect.center = (width // 2, height // 10)
+
+screen.blit(penge_tekst, penge_tekst_rect)
+screen.blit(inkomst_tekst, inkomst_tekst_rect)
+screen.blit(question_text, question_text_rect)
+# prints the options
+pos = 0
+for i in quiz_set["valgmuligheder"]:
+    pos += 50
+    question_text = font.render(f"{i['tekst']} : {i['pris']},-", False, (250, 250, 0))
+    question_text_rect = penge_tekst.get_rect()
+    question_text_rect.topleft = (width // 10, height // 10 + pos)
+    screen.blit(question_text, question_text_rect)
+pygame.display.flip()
+
+a_selected = True
+b_selected = False
+c_selected = False
+i_selected = False
 
 while running:
     for event in pygame.event.get():
@@ -116,20 +151,93 @@ while running:
             running = False
 
         random.shuffle(quiz_sets)
-        points = 0
-        penge = 200
-        inkomst = 100
-        if question_id == len(quiz_sets)+1:
+
+        # last round
+        if event.type == pygame.KEYDOWN and question_id == len(quiz_sets):
             print(question_id)
             print(len(quiz_sets))
             running = False
             quit()
-        if question_id == len(quiz_sets):
-            question_id += 1
+
+        penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
+        inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
+        question_text = font.render(f"{quiz_set['spørgsmål']}", False, (250, 250, 0))
+
+        penge_tekst_rect = penge_tekst.get_rect()
+        inkomst_tekst_rect = inkomst_tekst.get_rect()
+        question_text_rect = question_text.get_rect()
+
+        penge_tekst_rect.bottomright = (width, height)
+        inkomst_tekst_rect.bottomleft = (0, height)
+        question_text_rect.center = (width // 2, height // 10)
+
+        screen.blit(penge_tekst, penge_tekst_rect)
+        screen.blit(inkomst_tekst, inkomst_tekst_rect)
+        screen.blit(question_text, question_text_rect)
+
+        if (a_selected):
+            a = font.render(f">", False, (250, 250, 0))
+            a_rect = a.get_rect()
+
+            a_rect.topleft = (width // 10 - 20, height // 10 + 50 * 1)
+
+            screen.blit(a, a_rect)
+        elif (b_selected):
+            b = font.render(f">", False, (250, 250, 0))
+            b_rect = b.get_rect()
+
+            b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 2)
+
+            screen.blit(b, b_rect)
+        elif (c_selected):
+            b = font.render(f">", False, (250, 250, 0))
+            b_rect = b.get_rect()
+            b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 3)
+
+            screen.blit(b, b_rect)
+        elif (i_selected):
+            b = font.render(f">", False, (250, 250, 0))
+            b_rect = b.get_rect()
+
+            b_rect.topleft = (width // 10 - 20, height // 10 + 50 * 4)
+
+            screen.blit(b, b_rect)
+        # prints the options
+        pos = 0
+        for i in quiz_set["valgmuligheder"]:
+            pos += 50
+            question_text = font.render(f"{i['tekst']} : {i['pris']},-", False, (250, 250, 0))
+            question_text_rect = penge_tekst.get_rect()
+            question_text_rect.topleft = (width // 10, height // 10 + pos)
+            screen.blit(question_text, question_text_rect)
+        pygame.display.flip()
+
         if event.type == pygame.KEYDOWN and question_id != len(quiz_sets):
+            if event.key == pygame.K_a:
+                a_selected = True
+                b_selected = False
+                c_selected = False
+                i_selected = False
+            if event.key == pygame.K_b:
+                a_selected = False
+                b_selected = True
+                c_selected = False
+                i_selected = False
+            if event.key == pygame.K_c:
+                a_selected = False
+                b_selected = False
+                c_selected = True
+                i_selected = False
+            if event.key == pygame.K_i:
+                a_selected = False
+                b_selected = False
+                c_selected = False
+                i_selected = True
+
             if event.key == pygame.K_RETURN:
+                screen.fill((0,0,0))
                 print("fda")
-                quiz_set, = next_question(quiz_sets, question_id)
+                quiz_set = next_question(quiz_sets, question_id)
 
                 # text on pygame
                 penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
@@ -157,6 +265,9 @@ while running:
                     question_text_rect.topleft = (width // 10, height // 10 + pos)
                     screen.blit(question_text, question_text_rect)
                 question_id += 1
+            if event.key == pygame.K_a:
+                print("a")
+            pygame.display.flip()
 
             # it only stops when typed correct
             # run = True
