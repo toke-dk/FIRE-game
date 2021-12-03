@@ -100,6 +100,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        pygame_stuff.progress_bar.update_bar(screen, points)
         # if the screen is invest
         if invest_screen:
             screen.fill((0, 0, 0))
