@@ -1,6 +1,7 @@
 import pygame
 import pygame_stuff.progress_bar
 import random
+from sys import exit
 
 
 def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge):
@@ -11,39 +12,70 @@ def show_calculation_after_every_round(gamle_penge, pris, din_inkomst, nye_penge
 
 
 def choose_crypto(penge, inkomst):
+    gevinst = 0
     while True:
-        try:
-            beloeb = int(input("Hvor mange penge vil du investere: "))
-            if beloeb > penge:
-                # is doing except
-                print("Du har ikke råd")
+        input("Du kan investere i 3 forskellige risicier")
+        print("A) Bitcoin (stor risiko)")
+        print("B) s&p 500 (lige risiko)")
+        print("C) Disney (lille risiko)")
+        while True:
+            type_invest = input("Hvilken: ")
+            if type_invest.lower() == "a" or type_invest.lower() == "b" or type_invest.lower() == "c":
+                break
             else:
-                # gevinst either raises 15 percent or falls 15 percent
-                gevinst = random.randint(int(-(40 / 100 * beloeb)), int(40 / 100 * beloeb))
-                if gevinst < 0:
-                    print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
-                elif gevinst > 0:
-                    print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")
-                elif gevinst == 0:
-                    print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
-                inkomst += gevinst
+                print("Det skal være et af valgmulighederne")
+        while True:
+            try:
+                beloeb = int(input("Hvor mange penge vil du investere: "))
+                if beloeb > penge:
+                    print('Du har ikke råd')
+                    continue
+                elif type(beloeb) != int:
+                    continue
+                break
+            except:
+                print("Det skal være et tal")
+                continue
+        sandsynlighed = random.randint(1, 10)
+        # the award system
+        if type_invest.lower() == "a":
+            if sandsynlighed <= 2:
+                gevinst = beloeb
+            elif sandsynlighed > 2:
+                gevinst = -(beloeb/2)
+            break
+        elif type_invest.lower() == "b":
+            if sandsynlighed <= 5:
+                gevinst = beloeb/7
+            elif sandsynlighed > 5:
+                gevinst = beloeb/8
+            break
+        elif type_invest.lower() == "c":
+            if sandsynlighed <= 9:
+                gevinst = beloeb/11
+            elif sandsynlighed > 9:
+                gevinst = beloeb/13
+            break
+    gevinst = int(gevinst)
+    if gevinst < 0:
+        print(f"Fordi din investering ikke gik så godt, er din inkomst nu faldet med {gevinst}")
+    elif gevinst > 0:
+        print(f"Din investering går rigtig godt, så din inkomst er steget med {gevinst}")
+    elif gevinst == 0:
+        print("Din investering har desværre ikke gjort noget for dig så din inkomst er ikke steget")
 
-                # for printing the stuff
-                gamle_penge = penge
-                penge -= beloeb
-                nye_penge = penge
-                din_inkomst = inkomst
-                pris = beloeb
-
-                return gamle_penge, nye_penge, din_inkomst, pris
-        except:
-            print("Det skal være et tal!\n")
-            continue
-    return
+    inkomst += int(gevinst)
+    gamle_penge = penge
+    penge -= beloeb
+    nye_penge = penge
+    din_inkomst = inkomst
+    pris = beloeb
+    return gamle_penge, nye_penge, din_inkomst, pris
 
 
-
-screen = pygame.display.set_mode((600, 800))
+width = 800
+height = 800
+screen = pygame.display.set_mode((width, height))
 
 pygame.display.set_caption("FIRE-spillet")
 
@@ -54,6 +86,8 @@ gamle_penge = 0
 din_inkomst = 0
 nye_penge = 0
 pris = 0
+
+font = pygame.font.Font("freesansbold.ttf", 32)
 
 while running:
     for event in pygame.event.get():
@@ -92,6 +126,28 @@ while running:
 
         for quiz_set in quiz_sets:
             quiz_set_items = list(quiz_set.items())
+
+            # text on pygame
+            penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
+            inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
+
+            inkomst_tekst_rect = inkomst_tekst.get_rect()
+            penge_tekst_rect = penge_tekst.get_rect()
+
+            penge_tekst_rect.bottomright = (width, height)
+            inkomst_tekst_rect.bottomleft = (0, height)
+
+            screen.blit(penge_tekst, penge_tekst_rect)
+            screen.blit(inkomst_tekst, inkomst_tekst_rect)
+
+            # spørgsmål
+            question_text = font.render(f"{quiz_set['spørgsmål']}", False, (250, 250, 0))
+
+            question_text_rect = question_text.get_rect()
+
+            question_text_rect.center = (width//2, height//10)
+            screen.blit(question_text, question_text_rect)
+
             print(f'\nPenge: {penge}, Inkomst: {inkomst} \n{quiz_set["spørgsmål"]}')
 
             # prints the options
@@ -108,7 +164,9 @@ while running:
 
                 # investing
                 if gaet.upper() == "I":
-                    gamle_penge, nye_penge, din_inkomst, pris = choose_crypto(penge, inkomst)
+                    # det er defineret ovenfor
+                    gamle_penge, nye_penge, inkomst, pris = choose_crypto(penge, inkomst)
+                    din_inkomst = inkomst
                     run = False
                 # checks if it matchs the options
                 for i in quiz_set["valgmuligheder"]:
@@ -130,4 +188,7 @@ while running:
                         else:
                             print("Du har ikke råd til det")
             input(f"Penge i alt: {penge}")
+
+            # updates information
+            screen.fill(color=(0,0,0))
 
