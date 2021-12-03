@@ -1,3 +1,5 @@
+import time
+
 import pygame.display
 from pygame.locals import *
 import pygame_stuff.progress_bar
@@ -57,6 +59,7 @@ investing_sets = [{"option": "A. Bitcoin (stor risiko)", "winning_price": 1 + 1.
                   {"option": "B. Disney (mellem risiko)", "winning_price": 1 + 1/7, "losing_price": 1 - 1/8},
                   {"option": "C. S&P 500 (lille risiko)", "winning_price": 1 + 1/11, "losing_price": 1 - 1/13},]
 random.shuffle(quiz_sets)
+print(quiz_sets)
 
 quiz_set = next_question(quiz_sets, question_id)
 points = 0
@@ -90,7 +93,6 @@ for i in quiz_set["valgmuligheder"]:
 pygame.display.flip()
 
 arrow = {"is_selected" : True, "number" : 0, "color" : (255,255,0)}
-random.shuffle(quiz_sets)
 investing_amount = ""
 investing_amount_int = 0
 
@@ -203,11 +205,32 @@ while running:
 
         # if the screen is normal
         else:
-            if event.type == pygame.KEYDOWN and question_id == len(quiz_sets):
-                print(question_id)
-                print(len(quiz_sets))
-                running = False
-                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    arrow["number"] = 0
+                if event.key == pygame.K_b:
+                    arrow["number"] = 1
+                if event.key == pygame.K_c:
+                    arrow["number"] = 2
+
+                if event.key == pygame.K_i:
+                    arrow["number"] = 3
+
+                if event.key == pygame.K_RETURN:
+                    # if it is the invest option
+                    if arrow["number"] == 3:
+                        arrow["number"] = 0
+                        invest_screen = True
+                    elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] < penge:
+                        # giving points
+                        penge -= quiz_set["valgmuligheder"][arrow["number"]]["pris"]
+                        points += quiz_set["valgmuligheder"][arrow["number"]]["point"]
+                        inkomst += quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"]
+
+                        arrow["number"] = 0
+                        question_id += 1
+                        print(f"id: {question_id}")
+                        quiz_set = next_question(quiz_sets, question_id)
 
             penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
             inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
@@ -229,7 +252,7 @@ while running:
             if arrow["number"] == 3:
                 arrow["color"] = (255, 255, 0)
             elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] > penge:
-                arrow["color"] = (255, 0,0)
+                arrow["color"] = (255, 0, 0)
             else:
                 arrow["color"] = (255, 255, 0)
 
@@ -256,35 +279,11 @@ while running:
             screen.blit(invester_tekst, invester_tekst_rect)
 
             pygame.display.flip()
-
-            if event.type == pygame.KEYDOWN and question_id != len(quiz_sets):
-                if event.key == pygame.K_a:
-                    arrow["number"] = 0
-                if event.key == pygame.K_b:
-                    arrow["number"] = 1
-                if event.key == pygame.K_c:
-                    arrow["number"] = 2
-
-                if event.key == pygame.K_i:
-                    arrow["number"] = 3
-
-                if event.key == pygame.K_RETURN:
-                    # if it is the invest option
-                    if arrow["number"] == 3:
-                        arrow["number"] = 0
-                        invest_screen = True
-                    elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] < penge:
-                        arrow["number"] = 0
-                        print(quiz_set["valgmuligheder"][arrow["number"]]["pris"])
-                        print(penge)
-                        quiz_set = next_question(quiz_sets, question_id)
-                        question_id += 1
-
-                if event.key == pygame.K_a:
-                    print("a")
-                pygame.display.flip()
-                pygame.display.flip()
-                screen.fill(color=(0, 0, 0))
+            screen.fill(color=(0, 0, 0))
+            if question_id == len(quiz_sets)-1:
+                time.sleep(1)
+                running = False
+                quit()
 
                 # it only stops when typed correct
                 # run = True
