@@ -31,25 +31,25 @@ font = pygame.font.Font("freesansbold.ttf", 32)
 
 quiz_sets = [
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Bil", "point": 2, "pris": 300, "inkomststigning": 10},
+             "valgmuligheder": [{"tekst": "A. 1Bil", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Bill", "point": 2, "pris": 300, "inkomststigning": 10},
+             "valgmuligheder": [{"tekst": "A. 2Bill", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. Billl", "point": 2, "pris": 300, "inkomststigning": 10},
+             "valgmuligheder": [{"tekst": "A. 3Billl", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 300, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købeee?",
-             "valgmuligheder": [{"tekst": "A. Billll", "point": 2, "pris": 100, "inkomststigning": 10},
+             "valgmuligheder": [{"tekst": "A. 4Billll", "point": 2, "pris": 100, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 100, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
@@ -198,8 +198,10 @@ while running:
                         # new round
                         screen.fill((0,0,0))
                         invest_screen = False
+                        # only start new round if there is another question
                         question_id += 1
-                        quiz_set = next_question(quiz_sets, question_id)
+                        if question_id < len(quiz_sets):
+                            quiz_set = next_question(quiz_sets, question_id)
             text_surface = font.render(investing_amount, True, (255, 255, 0))
             screen.blit(text_surface, input_rect)
             pygame.display.flip()
@@ -229,9 +231,10 @@ while running:
                         inkomst += quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"]
 
                         arrow["number"] = 0
-                        question_id += 1
-                        print(f"id: {question_id}")
-                        quiz_set = next_question(quiz_sets, question_id)
+                        # only start new round if there is another question
+                        if question_id < len(quiz_sets):
+                            quiz_set = next_question(quiz_sets, question_id)
+
 
             penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
             inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
@@ -281,7 +284,7 @@ while running:
 
             pygame.display.flip()
             screen.fill(color=(0, 0, 0))
-            if question_id == len(quiz_sets)-1:
+            if question_id == len(quiz_sets):
                 time.sleep(1)
                 running = False
                 quit()
