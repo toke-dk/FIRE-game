@@ -3,6 +3,7 @@ from pygame.locals import *
 import pygame_stuff.progress_bar
 import random
 from sys import exit
+import time
 
 
 def next_question(quiz_sets, index):
@@ -230,6 +231,7 @@ while running:
 
                         arrow["number"] = 0
                         # only start new round if there is another question
+                        question_id += 1
                         if question_id < len(quiz_sets):
                             quiz_set = next_question(quiz_sets, question_id)
 
