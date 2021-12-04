@@ -48,8 +48,8 @@ def change_in_information(income_change, money_change, total_income):
     screen.fill((0,0,0))
 
 
-width = 800
-height = 800
+width = 1700
+height = 900
 screen = pygame.display.set_mode((width, height))
 
 pygame.display.set_caption("FIRE-spillet")
@@ -67,27 +67,28 @@ invest_screen = False
 font = pygame.font.Font("freesansbold.ttf", 32)
 
 quiz_sets = [
-            {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. 1Bil", "point": 2, "pris": 300, "inkomststigning": 10},
-                                {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
-                                {"tekst": "C. Hus", "point": -10, "pris": 12, "inkomststigning": 10}],
+            {"spørgsmål": "Du føler at du mangler noget. Du har så meget lyst til at købe et eller andet. Hvad vil du "
+                          "helst vælge:",
+             "valgmuligheder": [{"tekst": "A. Bil", "point": -10, "pris": 250000, "inkomststigning": -200},
+                                {"tekst": "B. Hjemmelavet vaskepulver", "point": 5, "pris": 10, "inkomststigning": 10},
+                                {"tekst": "C. Bøger og håber du får dem læst", "point": -3, "pris": 50, "inkomststigning": 0}],
              "svar": "A"
              },
-            {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. 2Bill", "point": 2, "pris": 300, "inkomststigning": 10},
-                                {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
-                                {"tekst": "C. Hus", "point": 55, "pris": 12, "inkomststigning": 10}],
+            {"spørgsmål": "Du har lige fået den tanke at du måske kunne overveje et barn, men er usikker. Hvad vælger du?",
+             "valgmuligheder": [{"tekst": "A. Vent til senere", "point": 4, "pris": 0, "inkomststigning": 0},
+                                {"tekst": "B. Få et barn", "point": -5, "pris": 0, "inkomststigning": -200},
+                                {"tekst": "C. Læg penge til siden til et barn", "point": 8, "pris": 0, "inkomststigning": -20}],
              "svar": "A"
              },
-            {"spørgsmål": "Hvad vil du helst købe?",
-             "valgmuligheder": [{"tekst": "A. 3Billl", "point": 2, "pris": 300, "inkomststigning": 10},
-                                {"tekst": "B. Tog", "point": 5, "pris": 300, "inkomststigning": 7},
-                                {"tekst": "C. Hus", "point": -50, "pris": 12, "inkomststigning": 10}],
+            {"spørgsmål": "Du vil gerne prøve at få fat i nogle passiver hvordan får du råd til det?",
+             "valgmuligheder": [{"tekst": "A. du prøver lykken og spiller lotto 2 gange om ugen", "point": -40, "pris": -100, "inkomststigning": -200},
+                                {"tekst": "B. Du arbejder mere så du kan tjene flere penge", "point": 5, "pris": 0, "inkomststigning": 15},
+                                {"tekst": "C. Du finder steder i din økonomi hvor du kan spare", "point": 40, "pris": 0, "inkomststigning": +200}],
              "svar": "A"
              },
-            {"spørgsmål": "Hvad vil du helst købeee?",
-             "valgmuligheder": [{"tekst": "A. 4Billll", "point": 2, "pris": 100, "inkomststigning": 10},
-                                {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
+            {"spørgsmål": "Du skal på en date. Du har i langt ønsket dig en kæreste og dette er din mulighed!",
+             "valgmuligheder": [{"tekst": "A. Du køber en overdådig middag og scorer hende/ham", "point": -10, "pris": 2000, "inkomststigning": -100},
+                                {"tekst": "B. Du tager hende på en billig date. Så scorer hende ikke", "point": 5, "pris": 12, "inkomststigning": 7},
                                 {"tekst": "C. Hus", "point": 11, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },

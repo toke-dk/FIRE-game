@@ -13,7 +13,7 @@ def update_bar(screen, point):
 
     point_max = 100
     point_min = -100
-    x_load = screen.get_width()//2
+    x_load = screen.get_width()//1.3
     y_load = screen.get_height()//8
     y_margin_load_bar = 105
     x_margin_load_bar = 73
