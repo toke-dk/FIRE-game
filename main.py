@@ -17,23 +17,30 @@ def color_decide(number):
         return (255, 0, 0)
 
 
-def change_in_information(income_change, money_change):
+def change_in_information(income_change, money_change, total_income):
 
     income_change_text = font.render(f"{f'+' if income_change >= 0 else ''}{income_change},-", False, color_decide(income_change))
     money_change_text = font.render(f"{f'+' if money_change >= 0 else ''}{money_change},-", False, color_decide(money_change))
+    total_income_text = font.render(f"{f'+' if total_income >= 0 else ''}{total_income},-", False, color_decide(total_income))
+
 
     income_change_text_rect = income_change_text.get_rect()
     money_change_text_rect = money_change_text.get_rect()
+    total_income_text_rect = total_income_text.get_rect()
+
 
     income_change_text_rect.bottomright = (screen.get_width(), screen.get_height() - 50)
-    print(screen.get_height())
+    total_income_text_rect.bottomright = (screen.get_width(), screen.get_height() - 50*2)
     money_change_text_rect.bottomleft = (0, screen.get_height() - 50)
 
     screen.blit(income_change_text, income_change_text_rect)
     screen.blit(money_change_text, money_change_text_rect)
+    screen.blit(total_income_text, total_income_text_rect)
     pygame.display.update(income_change_text_rect)
     pygame.display.update(money_change_text_rect)
-    time.sleep(2)
+    pygame.display.update(total_income_text_rect)
+    time.sleep(3)
+    screen.fill((0,0,0))
 
 
 width = 800
@@ -193,30 +200,34 @@ while running:
                         # they pay for the stock
                         penge -= investing_amount_int
 
+                        # gevinst
+                        gevinst = 0
+
                         # (if option 1)
                         if arrow["number"] == 0:
                             # (youve won)
                             if sandsynlighed <= 3:
                                 print("win")
-                                penge += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
+                                gevinst += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
                             elif sandsynlighed > 3:
                                 print("lose")
-                                penge += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
-                                print(f'{investing_amount_int * investing_sets[arrow["number"]]["losing_price"]}')
+                                gevinst += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
+                                print(f'ddd{investing_sets[arrow["number"]]["losing_price"]}')
                         if arrow["number"] == 1:
                             # (youve won)
                             if sandsynlighed <= 5:
-                                penge += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
+                                gevinst += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
                             elif sandsynlighed > 5:
-                                penge += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
+                                gevinst += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
                         if arrow["number"] == 2:
                             # (youve won)
                             if sandsynlighed <= 9:
-                                penge += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
+                                gevinst += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
                             elif sandsynlighed > 10:
-                                penge += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
+                                gevinst += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
 
-                        print(penge)
+                        penge += gevinst
+                        print(f"gevinst{gevinst}")
                         # the amount to invest
                         investing_amount = ""
 
@@ -226,6 +237,7 @@ while running:
                         # only start new round if there is another question
                         question_id += 1
                         if question_id < len(quiz_sets):
+                            change_in_information(0, gevinst, inkomst)
                             quiz_set = next_question(quiz_sets, question_id)
             text_surface = font.render(investing_amount, True, (255, 255, 0))
             screen.blit(text_surface, input_rect)
@@ -252,7 +264,7 @@ while running:
                     elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] < penge:
                         # giving points
                         change_in_information(-quiz_set["valgmuligheder"][arrow["number"]]["pris"],
-                                              quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"])
+                                              quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"], inkomst)
                         penge -= quiz_set["valgmuligheder"][arrow["number"]]["pris"]
                         points += quiz_set["valgmuligheder"][arrow["number"]]["point"]
                         inkomst += quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"]
