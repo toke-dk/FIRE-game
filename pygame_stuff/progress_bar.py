@@ -5,33 +5,36 @@ pygame.init()
 
 def update_bar(screen, point):
     # dette er bare en test for at se om det virker
+
+    loadedbar = pygame.image.load("Billeder/loadedbar.png")
+
+    loadedbar = pygame.transform.scale(loadedbar, (300, 600))
+    loadedbar_rect = loadedbar.get_rect()
+
     point_max = 100
     point_min = -100
-    x_load = 270
-    black = (0, 0, 0)
+    x_load = screen.get_width()//2
+    y_load = screen.get_height()//8
+    y_margin_load_bar = 100
+    x_margin_load_bar = 73
+    black = (255, 255, 255)
 
     if point_min <= point <= point_max:
         y_bar = 400 - (point*2.35)
 
     elif point_min >= point:
-        y_bar = 665
+        y_bar = y_load+loadedbar_rect.height-y_margin_load_bar-10
 
     elif point_max <= point:
-        y_bar = 165
+        y_bar = y_load+y_margin_load_bar
 
-    loadedbar = pygame.image.load("Billeder/loadedbar.png")
-    loadedbar_rect = loadedbar.get_rect()
 
-    loadedbar_rect.height = 800
-    loadedbar_rect.width = 400
-    loadedbar = pygame.transform.scale(loadedbar, (400, 800))
 
     # set det fra dette link: https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
     pygame.font.init()
     myfont = pygame.font.SysFont('Comic Sans MS', 30)
     textsurface = myfont.render('Some Text', False, (200, 15, 10))
-    screen.blit(loadedbar, (x_load, 20))
+    screen.blit(loadedbar, (x_load, y_load))
 
-    pygame.draw.rect(screen, black, (368, y_bar, 206, 10), width=0, border_radius=0, border_top_left_radius=-1,
-                     border_top_right_radius=-1, border_bottom_left_radius=-1, border_bottom_right_radius=-1)
+    pygame.draw.rect(screen, black, (x_load+x_margin_load_bar, y_bar, loadedbar_rect.width-2*x_margin_load_bar, 10))
 
