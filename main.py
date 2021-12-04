@@ -10,6 +10,32 @@ def next_question(quiz_sets, index):
     return quiz_sets[index]
 
 
+def color_decide(number):
+    if number >= 0:
+        return (0, 255, 0)
+    elif number < 0:
+        return (255, 0, 0)
+
+
+def change_in_information(income_change, money_change):
+
+    income_change_text = font.render(f"{f'+' if income_change >= 0 else ''}{income_change},-", False, color_decide(income_change))
+    money_change_text = font.render(f"{f'+' if money_change >= 0 else ''}{money_change},-", False, color_decide(money_change))
+
+    income_change_text_rect = income_change_text.get_rect()
+    money_change_text_rect = money_change_text.get_rect()
+
+    income_change_text_rect.bottomright = (screen.get_width(), screen.get_height() - 50)
+    print(screen.get_height())
+    money_change_text_rect.bottomleft = (0, screen.get_height() - 50)
+
+    screen.blit(income_change_text, income_change_text_rect)
+    screen.blit(money_change_text, money_change_text_rect)
+    pygame.display.update(income_change_text_rect)
+    pygame.display.update(money_change_text_rect)
+    time.sleep(2)
+
+
 width = 800
 height = 800
 screen = pygame.display.set_mode((width, height))
@@ -225,6 +251,8 @@ while running:
                         invest_screen = True
                     elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] < penge:
                         # giving points
+                        change_in_information(-quiz_set["valgmuligheder"][arrow["number"]]["pris"],
+                                              quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"])
                         penge -= quiz_set["valgmuligheder"][arrow["number"]]["pris"]
                         points += quiz_set["valgmuligheder"][arrow["number"]]["point"]
                         inkomst += quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"]
