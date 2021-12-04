@@ -29,14 +29,19 @@ def change_in_information(income_change, money_change, total_income):
     total_income_text_rect = total_income_text.get_rect()
 
 
-    income_change_text_rect.bottomright = (screen.get_width(), screen.get_height() - 50)
-    total_income_text_rect.bottomright = (screen.get_width(), screen.get_height() - 50*2)
-    money_change_text_rect.bottomleft = (0, screen.get_height() - 50)
+    money_change_text_rect.bottomright = (screen.get_width(), screen.get_height() - 50)
+    total_income_text_rect.bottomright = (screen.get_width(), screen.get_height() - 50)
+    income_change_text_rect.bottomleft = (0, screen.get_height() - 50)
 
     screen.blit(income_change_text, income_change_text_rect)
     screen.blit(money_change_text, money_change_text_rect)
-    screen.blit(total_income_text, total_income_text_rect)
     pygame.display.update(income_change_text_rect)
+    pygame.display.update(money_change_text_rect)
+    time.sleep(3)
+    # displays the new income
+    pygame.draw.rect(screen, (0,0,0), total_income_text_rect)
+    pygame.draw.rect(screen, (0,0,0), money_change_text_rect)
+    screen.blit(total_income_text, total_income_text_rect)
     pygame.display.update(money_change_text_rect)
     pygame.display.update(total_income_text_rect)
     time.sleep(3)
@@ -226,7 +231,8 @@ while running:
                             elif sandsynlighed > 10:
                                 gevinst += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
 
-                        penge += gevinst
+                        penge += round(gevinst, 1)
+                        penge += inkomst
                         print(f"gevinst{gevinst}")
                         # the amount to invest
                         investing_amount = ""
@@ -237,7 +243,7 @@ while running:
                         # only start new round if there is another question
                         question_id += 1
                         if question_id < len(quiz_sets):
-                            change_in_information(0, gevinst, inkomst)
+                            change_in_information(0, gevinst-investing_amount_int, inkomst)
                             quiz_set = next_question(quiz_sets, question_id)
             text_surface = font.render(investing_amount, True, (255, 255, 0))
             screen.blit(text_surface, input_rect)
@@ -263,8 +269,9 @@ while running:
                         invest_screen = True
                     elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] < penge:
                         # giving points
-                        change_in_information(-quiz_set["valgmuligheder"][arrow["number"]]["pris"],
-                                              quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"], inkomst)
+                        change_in_information(quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"],
+                                                -quiz_set["valgmuligheder"][arrow["number"]]["pris"],
+                                                inkomst)
                         penge -= quiz_set["valgmuligheder"][arrow["number"]]["pris"]
                         points += quiz_set["valgmuligheder"][arrow["number"]]["point"]
                         inkomst += quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"]
