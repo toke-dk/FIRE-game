@@ -348,38 +348,3 @@ while running:
                 time.sleep(1)
                 running = False
                 quit()
-
-                # it only stops when typed correct
-                # run = True
-                # while run:
-                #     # dette er fra den anden fil
-                #     pygame_stuff.progress_bar.update_bar(screen, points)
-                #
-                #     gaet = "a"
-                #
-                #     # investing
-                #     if gaet.upper() == "I":
-                #         # det er defineret ovenfor
-                #         gamle_penge, nye_penge, inkomst, pris = choose_crypto(penge, inkomst)
-                #         din_inkomst = inkomst
-                #         run = False
-                #     # checks if it matchs the options
-                #     for i in quiz_set["valgmuligheder"]:
-                #         # the first letter in the option
-                #         if gaet.upper() == i["tekst"][0]:
-                #             # checks if you can afford
-                #             if penge - i["pris"] >= 0:
-                #                 points += int(i["point"])
-                #                 # prisen du skal betale
-                #                 penge -= i["pris"]
-                #                 # evt asset
-                #                 inkomst += i["inkomststigning"]
-                #                 # du får løn
-                #                 penge += inkomst
-                #                 run = False
-                #             else:
-                #                 'print("Du har ikke råd til det")'
-
-                # updates information
-
-
