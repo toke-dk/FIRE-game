@@ -37,14 +37,14 @@ def change_in_information(income_change, money_change, total_income):
     screen.blit(money_change_text, money_change_text_rect)
     pygame.display.update(income_change_text_rect)
     pygame.display.update(money_change_text_rect)
-    # time.sleep(3)
+    time.sleep(3)
     # displays the new income
     pygame.draw.rect(screen, (0,0,0), total_income_text_rect)
     pygame.draw.rect(screen, (0,0,0), money_change_text_rect)
     screen.blit(total_income_text, total_income_text_rect)
     pygame.display.update(money_change_text_rect)
     pygame.display.update(total_income_text_rect)
-    # time.sleep(3)
+    time.sleep(2)
     screen.fill((0,0,0))
 
 
