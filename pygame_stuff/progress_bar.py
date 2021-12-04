@@ -15,12 +15,12 @@ def update_bar(screen, point):
     point_min = -100
     x_load = screen.get_width()//2
     y_load = screen.get_height()//8
-    y_margin_load_bar = 100
+    y_margin_load_bar = 105
     x_margin_load_bar = 73
     black = (255, 255, 255)
 
     if point_min <= point <= point_max:
-        y_bar = 400 - (point*2.35)
+        y_bar = (y_load + y_margin_load_bar + (loadedbar_rect.height-2*y_margin_load_bar)//2) - ((point/100 * (loadedbar_rect.height-2*y_margin_load_bar))/2)
 
     elif point_min >= point:
         y_bar = y_load+loadedbar_rect.height-y_margin_load_bar-10

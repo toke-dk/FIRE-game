@@ -70,25 +70,25 @@ quiz_sets = [
             {"spørgsmål": "Hvad vil du helst købe?",
              "valgmuligheder": [{"tekst": "A. 1Bil", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
-                                {"tekst": "C. Hus", "point": 25, "pris": 12, "inkomststigning": 10}],
+                                {"tekst": "C. Hus", "point": -10, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
              "valgmuligheder": [{"tekst": "A. 2Bill", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
-                                {"tekst": "C. Hus", "point": 25, "pris": 12, "inkomststigning": 10}],
+                                {"tekst": "C. Hus", "point": 55, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købe?",
              "valgmuligheder": [{"tekst": "A. 3Billl", "point": 2, "pris": 300, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 300, "inkomststigning": 7},
-                                {"tekst": "C. Hus", "point": 50, "pris": 12, "inkomststigning": 10}],
+                                {"tekst": "C. Hus", "point": -50, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
             {"spørgsmål": "Hvad vil du helst købeee?",
              "valgmuligheder": [{"tekst": "A. 4Billll", "point": 2, "pris": 100, "inkomststigning": 10},
                                 {"tekst": "B. Tog", "point": 5, "pris": 12, "inkomststigning": 7},
-                                {"tekst": "C. Hus", "point": 25, "pris": 12, "inkomststigning": 10}],
+                                {"tekst": "C. Hus", "point": 11, "pris": 12, "inkomststigning": 10}],
              "svar": "A"
              },
         ]
