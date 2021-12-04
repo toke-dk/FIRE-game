@@ -262,11 +262,20 @@ while running:
                 if event.key == pygame.K_i:
                     arrow["number"] = 3
 
+                if event.key == pygame.K_s:
+                    arrow["number"] = 4
+
                 if event.key == pygame.K_RETURN:
                     # if it is the invest option
                     if arrow["number"] == 3:
                         arrow["number"] = 0
                         invest_screen = True
+                    elif arrow["number"] == 4:
+                      change_in_information(0, 0, inkomst)
+                      penge += inkomst
+                      arrow["number"] = 0
+                      if question_id < len(quiz_sets):
+                          quiz_set = next_question(quiz_sets, question_id)
                     elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] < penge:
                         # giving points
                         change_in_information(quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"],
@@ -300,7 +309,7 @@ while running:
             screen.blit(question_text, question_text_rect)
 
             # the arrow
-            if arrow["number"] == 3:
+            if arrow["number"] == 3 or arrow["number"] == 4:
                 arrow["color"] = (255, 255, 0)
             elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] > penge:
                 arrow["color"] = (255, 0, 0)
@@ -322,12 +331,16 @@ while running:
                 screen.blit(question_text, question_text_rect)
 
             invester_tekst = font.render(f"I. Investér", False, (250, 250, 0))
+            spar_op_tekst = font.render(f"S. Spar op", False, (250, 250, 0))
 
             invester_tekst_rect = invester_tekst.get_rect()
+            spar_op_tekst_rect = invester_tekst.get_rect()
 
             invester_tekst_rect.topleft = (width // 10, height // 10 + 50 * 4)
+            spar_op_tekst_rect.topleft = (width // 10, height // 10 + 50 * 5)
 
             screen.blit(invester_tekst, invester_tekst_rect)
+            screen.blit(spar_op_tekst, spar_op_tekst_rect)
 
             pygame.display.flip()
             screen.fill(color=(0, 0, 0))
