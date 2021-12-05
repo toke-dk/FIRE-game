@@ -94,11 +94,6 @@ quiz_sets = [
              "svar": "A"
              },
         ]
-investing_sets = [{"option": "A. Bitcoin (stor risiko)", "winning_price": 1 + 1.2, "losing_price": 1 - 1},
-                  {"option": "B. Disney (mellem risiko)", "winning_price": 1 + 1/7, "losing_price": 1 - 1/8},
-                  {"option": "C. S&P 500 (lille risiko)", "winning_price": 1 + 1/11, "losing_price": 1 - 1/13},]
-random.shuffle(quiz_sets)
-print(quiz_sets)
 
 quiz_set = next_question(quiz_sets, question_id)
 points = 0
@@ -141,6 +136,14 @@ while running:
             running = False
         pygame_stuff.progress_bar.update_bar(screen, points)
         # if the screen is invest
+        investing_sets = [{"option": "A. Bitcoin (stor risiko)", "winning_price": 1 + random.uniform(1, 1.6),
+                           "losing_price": 1 - random.uniform(0.8, 1)},
+                          {"option": "B. Disney (mellem risiko)", "winning_price": 1 + 1 / round(random.uniform(6, 9)),
+                           "losing_price": 1 - 1 / round(random.uniform(7, 10))},
+                          {"option": "C. S&P 500 (lille risiko)",
+                           "winning_price": 1 + 1 / round(random.uniform(10, 13)),
+                           "losing_price": 1 - 1 / round(random.uniform(12, 14))}, ]
+
         if invest_screen:
             screen.fill((0, 0, 0))
 
@@ -219,7 +222,7 @@ while running:
                             elif sandsynlighed > 3:
                                 print("lose")
                                 gevinst += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
-                                print(f'ddd{investing_sets[arrow["number"]]["losing_price"]}')
+                                print(f'Price {investing_sets[arrow["number"]]["losing_price"]}')
                         if arrow["number"] == 1:
                             # (youve won)
                             if sandsynlighed <= 5:
@@ -232,8 +235,8 @@ while running:
                                 gevinst += investing_amount_int * investing_sets[arrow["number"]]["winning_price"]
                             elif sandsynlighed > 10:
                                 gevinst += investing_amount_int * investing_sets[arrow["number"]]["losing_price"]
-
-                        penge += round(gevinst, 1)
+                        gevinst = round(gevinst, 1)
+                        penge += gevinst
                         penge += inkomst
                         print(f"gevinst{gevinst}")
                         # the amount to invest
@@ -247,11 +250,12 @@ while running:
                         change_in_information(0, gevinst - investing_amount_int, inkomst)
                         if question_id < len(quiz_sets):
                             quiz_set = next_question(quiz_sets, question_id)
+                            end_screen = True
             text_surface = font.render(investing_amount, True, (255, 255, 0))
             screen.blit(text_surface, input_rect)
             pygame.display.flip()
 
-        elif end_screen:
+        elif False:
             screen.fill((0,0,0))
 
             penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
@@ -305,6 +309,7 @@ while running:
                                                 -quiz_set["valgmuligheder"][arrow["number"]]["pris"],
                                                 inkomst)
                         penge -= quiz_set["valgmuligheder"][arrow["number"]]["pris"]
+                        penge += inkomst
                         points += quiz_set["valgmuligheder"][arrow["number"]]["point"]
                         inkomst += quiz_set["valgmuligheder"][arrow["number"]]["inkomststigning"]
 
@@ -313,7 +318,7 @@ while running:
                         question_id += 1
                         if question_id < len(quiz_sets):
                             quiz_set = next_question(quiz_sets, question_id)
-
+                            end_screen = True
 
             penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
             inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
