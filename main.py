@@ -84,15 +84,35 @@ quiz_sets = [
             {"spørgsmål": "Du vil gerne prøve at få fat i nogle passiver hvordan får du råd til det?",
              "valgmuligheder": [{"tekst": "A. du prøver lykken og spiller lotto 2 gange om ugen", "point": -40, "pris": -100, "inkomststigning": -200},
                                 {"tekst": "B. Du arbejder mere så du kan tjene flere penge", "point": 5, "pris": 0, "inkomststigning": 15},
-                                {"tekst": "C. Du finder steder i din økonomi hvor du kan spare", "point": 40, "pris": 0, "inkomststigning": +200}],
+                                {"tekst": "C. Du finder steder i din økonomi hvor du kan spare", "point": 40, "pris": 0, "inkomststigning": 200}],
              "svar": "A"
              },
             {"spørgsmål": "Du skal på en date. Du har i langt ønsket dig en kæreste og dette er din mulighed!",
              "valgmuligheder": [{"tekst": "A. Du køber en overdådig middag og scorer hende/ham", "point": -10, "pris": 2000, "inkomststigning": -100},
-                                {"tekst": "B. Du tager hende på en billig date. Så scorer hende ikke", "point": 5, "pris": 12, "inkomststigning": 7},
-                                {"tekst": "C. Hus", "point": 11, "pris": 12, "inkomststigning": 10}],
+                                {"tekst": "B. Du tager hende på en billig date. Så scorer hende ikke", "point": 5, "pris": 50, "inkomststigning": 0},
+                                {"tekst": "C. Du aflyser daten", "point": 4, "pris": 0, "inkomststigning": 0}],
              "svar": "A"
              },
+            {"spørgsmål": "Du vil gerne sætte dig ind i hvordan du kan købe assets for at blive økonomisk uafhængig, hvad gør du?",
+             "valgmuligheder": [{"tekst": "A. Finder tidspunkter på din dag, til at sætte dig ind", "point": 15, "pris": 0, "inkomststigning": 0},
+                                {"tekst": "B. Betaler for et abbonoment, de siger at de kan hjælpe dig", "point": -40, "pris": 100, "inkomststigning": -60},
+                                {"tekst": "C. Du siger op fra dit job, og håber på at du tager dig sammen", "point": 13, "pris": 0, "inkomststigning": -400}],
+             "svar": "A"
+             },
+            {"spørgsmål": "Du har altid ønsket at dine forældre havde mere tid med dig. Hvad vil du gøre nu som voksen?",
+             "valgmuligheder": [{"tekst": "A. Blive ved med at arbejde, fordi der jo ikke er andre muligheder", "point": -18, "pris": 0, "inkomststigning": 0},
+                                {"tekst": "B. Du køber en masse aktiver(assets)", "point": 40, "pris": 400, "inkomststigning": 120},
+                                {"tekst": "C. Du arbejder mindre, og får mindre i løn", "point": 6, "pris": 0, "inkomststigning": -200}],
+             "svar": "A"
+             },
+            {"spørgsmål": "Du kan købe en del af en lejlighed, du har allerede en god en i forvejen, hvad gør du?",
+             "valgmuligheder": [{"tekst": "A. Køber den og lejer den ud til andre", "point": 45, "pris": 400, "inkomststigning": 100},
+                                {"tekst": "B. Du kigger på den men bruger ingen penge, da du har en i forvejen", "point": 0, "pris": 0, "inkomststigning": 0},
+                                {"tekst": "C. Køber den og fotæller folk at dine kan købe den billigt", "point": -5, "pris": 600, "inkomststigning": -100}],
+             "svar": "A"
+             },
+
+
         ]
 
 quiz_set = next_question(quiz_sets, question_id)
@@ -135,15 +155,15 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         pygame_stuff.progress_bar.update_bar(screen, points)
-        # if the screen is invest
+        # the invest price is changing
         investing_sets = [{"option": "A. Bitcoin (stor risiko)", "winning_price": 1 + random.uniform(1, 1.6),
                            "losing_price": 1 - random.uniform(0.8, 1)},
-                          {"option": "B. Disney (mellem risiko)", "winning_price": 1 + 1 / round(random.uniform(6, 9)),
-                           "losing_price": 1 - 1 / round(random.uniform(7, 10))},
+                          {"option": "B. Disney (mellem risiko)", "winning_price": 1 + 1 /random.uniform(6, 9),
+                           "losing_price": 1 - 1 / random.uniform(7, 10)},
                           {"option": "C. S&P 500 (lille risiko)",
-                           "winning_price": 1 + 1 / round(random.uniform(10, 13)),
-                           "losing_price": 1 - 1 / round(random.uniform(12, 14))}, ]
-
+                           "winning_price": 1 + 1 /random.uniform(10, 13),
+                           "losing_price": 1 - 1 / random.uniform(12, 14)}, ]
+        # if the screen is invest
         if invest_screen:
             screen.fill((0, 0, 0))
 
@@ -247,7 +267,9 @@ while running:
                         invest_screen = False
                         # only start new round if there is another question
                         question_id += 1
-                        change_in_information(0, gevinst - investing_amount_int, inkomst)
+                        arrow["number"] = 0
+                        print(gevinst)
+                        change_in_information(0, round(gevinst - investing_amount_int, 1), inkomst)
                         if question_id < len(quiz_sets):
                             quiz_set = next_question(quiz_sets, question_id)
                             end_screen = True
