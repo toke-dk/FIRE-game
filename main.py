@@ -63,6 +63,7 @@ nye_penge = 0
 pris = 0
 question_id = 0
 invest_screen = False
+end_screen = False
 
 font = pygame.font.Font("freesansbold.ttf", 32)
 
@@ -243,12 +244,32 @@ while running:
                         invest_screen = False
                         # only start new round if there is another question
                         question_id += 1
+                        change_in_information(0, gevinst - investing_amount_int, inkomst)
                         if question_id < len(quiz_sets):
-                            change_in_information(0, gevinst-investing_amount_int, inkomst)
                             quiz_set = next_question(quiz_sets, question_id)
             text_surface = font.render(investing_amount, True, (255, 255, 0))
             screen.blit(text_surface, input_rect)
             pygame.display.flip()
+
+        elif end_screen:
+            screen.fill((0,0,0))
+
+            penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
+            inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
+            question_text = font.render(f"{quiz_set['spørgsmål']}", False, (250, 250, 0))
+
+            penge_tekst_rect = penge_tekst.get_rect()
+            inkomst_tekst_rect = inkomst_tekst.get_rect()
+            question_text_rect = question_text.get_rect()
+
+            penge_tekst_rect.bottomright = (width, height)
+            inkomst_tekst_rect.bottomleft = (0, height)
+            question_text_rect.center = (width // 2, height // 10)
+
+            screen.blit(penge_tekst, penge_tekst_rect)
+            screen.blit(inkomst_tekst, inkomst_tekst_rect)
+            screen.blit(question_text, question_text_rect)
+
 
         # if the screen is normal
         else:
@@ -275,6 +296,7 @@ while running:
                       change_in_information(0, 0, inkomst)
                       penge += inkomst
                       arrow["number"] = 0
+                      question_id += 1
                       if question_id < len(quiz_sets):
                           quiz_set = next_question(quiz_sets, question_id)
                     elif quiz_set["valgmuligheder"][arrow["number"]]["pris"] < penge:
