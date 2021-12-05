@@ -277,26 +277,6 @@ while running:
             screen.blit(text_surface, input_rect)
             pygame.display.flip()
 
-        elif False:
-            screen.fill((0,0,0))
-
-            penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
-            inkomst_tekst = font.render(f"Indkomst: {inkomst},-", False, (250, 250, 0))
-            question_text = font.render(f"{quiz_set['spørgsmål']}", False, (250, 250, 0))
-
-            penge_tekst_rect = penge_tekst.get_rect()
-            inkomst_tekst_rect = inkomst_tekst.get_rect()
-            question_text_rect = question_text.get_rect()
-
-            penge_tekst_rect.bottomright = (width, height)
-            inkomst_tekst_rect.bottomleft = (0, height)
-            question_text_rect.center = (width // 2, height // 10)
-
-            screen.blit(penge_tekst, penge_tekst_rect)
-            screen.blit(inkomst_tekst, inkomst_tekst_rect)
-            screen.blit(question_text, question_text_rect)
-
-
         # if the screen is normal
         else:
             if event.type == pygame.KEYDOWN:
