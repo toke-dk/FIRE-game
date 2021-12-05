@@ -6,7 +6,15 @@ pygame.init()
 def update_bar(screen, point):
     # dette er bare en test for at se om det virker
 
+    pygame.font.init()
+    myfont = pygame.font.SysFont('Comic Sans MS', 60)
+
     loadedbar = pygame.image.load("Billeder/loadedbar.png")
+    percent_color = (0,0,255)
+    if round(point, 1) < 0:
+        percent_color = (255,0,0)
+    percent_text = myfont.render(f"{round(point, 1)}%", False, percent_color)
+    screen.blit(percent_text, (screen.get_height(), screen.get_width()//2))
 
     loadedbar = pygame.transform.scale(loadedbar, (300, 600))
     loadedbar_rect = loadedbar.get_rect()
@@ -31,8 +39,7 @@ def update_bar(screen, point):
 
 
     # set det fra dette link: https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-    pygame.font.init()
-    myfont = pygame.font.SysFont('Comic Sans MS', 30)
+
     textsurface = myfont.render('Some Text', False, (200, 15, 10))
     screen.blit(loadedbar, (x_load, y_load))
 
