@@ -7,7 +7,7 @@ def update_bar(screen, point):
     # dette er bare en test for at se om det virker
 
     pygame.font.init()
-    myfont = pygame.font.SysFont('Comic Sans MS', 30)
+    myfont = pygame.font.SysFont('Comic Sans MS', 60)
 
     loadedbar = pygame.image.load("Billeder/loadedbar.png")
     percent_color = (0,0,255)
