@@ -70,7 +70,7 @@ font = pygame.font.Font("freesansbold.ttf", 32)
 quiz_sets = [
             {"spørgsmål": "Du føler at du mangler noget. Du har så meget lyst til at købe et eller andet. Hvad vil du "
                           "helst vælge:",
-             "valgmuligheder": [{"tekst": "A. Bil", "point": -10, "pris": 250000, "inkomststigning": -200},
+             "valgmuligheder": [{"tekst": "A. Bil", "point": -10, "pris": 8000, "inkomststigning": -200},
                                 {"tekst": "B. Hjemmelavet vaskepulver", "point": 5, "pris": 10, "inkomststigning": 10},
                                 {"tekst": "C. Bøger og håber du får dem læst", "point": -3, "pris": 50, "inkomststigning": 0}],
              "svar": "A"
@@ -108,10 +108,15 @@ quiz_sets = [
             {"spørgsmål": "Du kan købe en del af en lejlighed, du har allerede en god en i forvejen, hvad gør du?",
              "valgmuligheder": [{"tekst": "A. Køber den og lejer den ud til andre", "point": 45, "pris": 400, "inkomststigning": 100},
                                 {"tekst": "B. Du kigger på den men bruger ingen penge, da du har en i forvejen", "point": 0, "pris": 0, "inkomststigning": 0},
-                                {"tekst": "C. Køber den og fotæller folk at dine kan købe den billigt", "point": -5, "pris": 600, "inkomststigning": -100}],
+                                {"tekst": "C. Køber den og fotæller folk at de kan købe den billigt", "point": -5, "pris": 600, "inkomststigning": -100}],
              "svar": "A"
              },
-
+            {"spørgsmål": "Du overvejer at sige op for at starte op, for at starte din egen forretning",
+             "valgmuligheder": [{"tekst": "A. Du lader vær med at sige op, fordi du indser at det nok ikke bliver til noget", "point": -10, "pris": 0, "inkomststigning": 0},
+                                {"tekst": "B. Du starter virksomhed. Det koster nogle penge, men du tager chancen.", "point": 20, "pris": 800, "inkomststigning": random.randint(-100, 400)},
+                                {"tekst": "C. Du siger op, men dropper ideen og bliver ansat i en anden virksomhed.", "point": -15, "pris": 0, "inkomststigning": -10}],
+             "svar": "A"
+             },
 
         ]
 
