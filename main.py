@@ -62,6 +62,7 @@ din_inkomst = 0
 nye_penge = 0
 pris = 0
 question_id = 0
+start_screen = True
 invest_screen = False
 end_screen = False
 
@@ -159,7 +160,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        pygame_stuff.progress_bar.update_bar(screen, points)
         # the invest price is changing
         investing_sets = [{"option": "A. Bitcoin (stor risiko)", "winning_price": 1 + random.uniform(1, 1.6),
                            "losing_price": 1 - random.uniform(0.8, 1)},
@@ -168,8 +168,25 @@ while running:
                           {"option": "C. S&P 500 (lille risiko)",
                            "winning_price": 1 + 1 /random.uniform(10, 13),
                            "losing_price": 1 - 1 / random.uniform(12, 14)}, ]
+        if start_screen:
+            screen.fill((0,0,0))
+            start_font = pygame.font.Font("fonts/PressStart2P-Regular.ttf", 64)
+            start_font_undertext = pygame.font.Font("fonts/PlayfairDisplaySC-Italic.ttf", 30)
+            start_text = start_font.render("Fire-spillet", False, (255,255,0))
+            under_text = start_font_undertext.render("( Tryk enter for at starte )", False, (255,255,0))
+            start_font_undertext_rect = under_text.get_rect()
+            start_text_rect = start_text.get_rect()
+            start_text_rect.center = (screen.get_width()//2, height//3)
+            start_font_undertext_rect.center = (screen.get_width()//2, height//1.5)
+            screen.blit(start_text, start_text_rect)
+            screen.blit(under_text, start_font_undertext_rect)
+            pygame.display.flip()
+
+            if event.type == KEYDOWN:
+                if event.key == K_RETURN:
+                    start_screen = False
         # if the screen is invest
-        if invest_screen:
+        elif invest_screen:
             screen.fill((0, 0, 0))
 
             penge_tekst = font.render(f"Penge: {penge},-", False, (250, 250, 0))
@@ -284,6 +301,8 @@ while running:
 
         # if the screen is normal
         else:
+            screen.fill((0,0,0))
+            pygame_stuff.progress_bar.update_bar(screen, points)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
                     arrow["number"] = 0
